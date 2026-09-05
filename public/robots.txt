@@ -1,0 +1,13 @@
+# Vetrikharam Home Services Robots Configuration
+# https://vasanth-software-dev.github.io/vetrikharam_services/
+
+User-agent: *
+Allow: /
+
+# Disallow internal API endpoints & dev routes
+Disallow: /api/
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# XML Sitemaps
+Sitemap: https://vasanth-software-dev.github.io/vetrikharam_services/sitemap.xml

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Zap, Receipt, Award, Phone, CalendarDays, Star, Users, User, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Zap, Receipt, Award, Phone, CalendarDays, Star, User, CheckCircle2 } from 'lucide-react';
 import emailjs from "@emailjs/browser";
 import { CONTACT_NUMBER } from '../utils/contacts';
 
@@ -14,9 +14,18 @@ export default function Hero({ onBookClick }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const carouselImages = [
-    "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1622044939413-0b829c342434?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1607472586893-edb5ca08f55d?auto=format&fit=crop&w=1200&q=80"
+    {
+      url: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80",
+      alt: "Professional technician performing doorstep air conditioner repair and diagnostic testing"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1622044939413-0b829c342434?auto=format&fit=crop&w=1200&q=80",
+      alt: "Licensed electrician troubleshooting home circuit breaker panel and wiring"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1607472586893-edb5ca08f55d?auto=format&fit=crop&w=1200&q=80",
+      alt: "Expert plumbing technician inspecting water pipes and pressure connections"
+    }
   ];
 
   useEffect(() => {
@@ -24,7 +33,7 @@ export default function Hero({ onBookClick }) {
       setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [carouselImages.length]);
 
   const handleQuickChange = (e) => {
     const { name, value } = e.target;
@@ -119,8 +128,12 @@ export default function Hero({ onBookClick }) {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === currentSlide ? 'opacity-100' : 'opacity-0'}`}
           >
             <img 
-              src={image} 
-              alt={`slide-${idx}`} 
+              src={image.url} 
+              alt={image.alt} 
+              width="1200"
+              height="800"
+              fetchPriority={idx === 0 ? "high" : "low"}
+              loading={idx === 0 ? "eager" : "lazy"}
               className="w-full h-full object-cover"
             />
           </div>

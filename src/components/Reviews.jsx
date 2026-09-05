@@ -125,7 +125,7 @@ export default function Reviews() {
                     {/* Header */}
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h4 className="font-bold text-navy font-poppins leading-none">{test.name}</h4>
+                        <h3 className="font-bold text-navy font-poppins leading-none text-base">{test.name}</h3>
                         <span className="text-[11px] text-gray-400 mt-1 block">{test.location}</span>
                       </div>
                       

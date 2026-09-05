@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { MapPin, Search, CheckCircle, AlertCircle, Building2 } from 'lucide-react';
+import { Search, CheckCircle, AlertCircle, Building2, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { LOCATIONS_CATALOG } from '../data/seoData';
 
 export default function ServiceArea() {
   const [city, setCity] = useState('');
@@ -9,12 +11,12 @@ export default function ServiceArea() {
   const [status, setStatus] = useState(null); // 'success', 'error', or null
   const [message, setMessage] = useState('');
 
-  const activeLocations = [
-    { city: "New York", areas: "Manhattan, Brooklyn, Queens, Bronx" },
-    { city: "Los Angeles", areas: "Beverly Hills, Santa Monica, Pasadena, Downtown" },
-    { city: "Chicago", areas: "The Loop, Lincoln Park, Hyde Park, Wicker Park" },
-    { city: "Houston", areas: "Downtown, Midtown, The Heights, River Oaks" }
-  ];
+  const activeLocations = LOCATIONS_CATALOG.map(loc => ({
+    city: loc.name,
+    id: loc.id,
+    areas: loc.keyLocalities.join(', '),
+    pincodes: loc.pincodes
+  }));
 
   const handleCheck = (e) => {
     e.preventDefault();
@@ -24,77 +26,74 @@ export default function ServiceArea() {
 
     if (!trimmedCity && !trimmedArea && !trimmedPincode) {
       setStatus('error');
-      setMessage('Please enter a City, Area, or Pincode to check availability.');
+      setMessage('Please enter an area, city, or pincode to check technician availability.');
       return;
     }
 
     if (trimmedPincode) {
-      if (!/^\d{5,6}$/.test(trimmedPincode)) {
+      if (!/^\d{6}$/.test(trimmedPincode)) {
         setStatus('error');
-        setMessage('Please enter a valid 5 or 6 digit numeric pincode.');
+        setMessage('Please enter a valid 6-digit postal pincode.');
         return;
       }
       
-      // Validate pincode prefix
-      // New York: 10xxx, 11xxx, 12xxx
-      // Los Angeles: 90xxx, 91xxx
-      // Chicago: 60xxx
-      // Houston: 77xxx
-      const prefix2 = trimmedPincode.substring(0, 2);
-      const isValidPincode = ['10', '11', '12', '90', '91', '60', '77'].includes(prefix2);
-      
-      if (!isValidPincode) {
+      // Validate Chennai / Ambattur pincode prefix (600xxx series)
+      if (trimmedPincode.startsWith('600')) {
+        setStatus('success');
+        setMessage(`Great news! Vetrikharam technicians operate in pincode ${trimmedPincode} with same-day technician availability.`);
+        return;
+      } else {
         setStatus('error');
-        setMessage(`Sorry, vetikharam is not active in pincode ${trimmedPincode} yet. We are expanding rapidly!`);
+        setMessage(`Sorry, Vetrikharam currently operates across Chennai and Ambattur (600xxx pincodes). We are expanding to other Tamil Nadu districts soon!`);
         return;
       }
     }
 
     if (trimmedCity) {
       const cityLower = trimmedCity.toLowerCase();
-      const matchedLocation = activeLocations.find(loc => loc.city.toLowerCase() === cityLower);
-      if (!matchedLocation) {
+      const matched = activeLocations.find(loc => 
+        loc.city.toLowerCase().includes(cityLower) || cityLower.includes(loc.city.toLowerCase())
+      );
+      if (matched) {
+        setStatus('success');
+        setMessage(`Great news! We have active technician teams operating in ${matched.city}.`);
+        return;
+      } else {
         setStatus('error');
-        setMessage(`Sorry, we do not service "${trimmedCity}" yet. We currently operate in New York, Los Angeles, Chicago, and Houston.`);
+        setMessage(`We currently operate across Chennai and Ambattur. Additional service zones are opening soon.`);
         return;
       }
     }
 
-    if (trimmedArea && !trimmedCity && !trimmedPincode) {
+    if (trimmedArea) {
       const areaLower = trimmedArea.toLowerCase();
       const isAreaServiced = activeLocations.some(loc => 
         loc.areas.toLowerCase().includes(areaLower)
       );
-      if (!isAreaServiced) {
-        setStatus('error');
-        setMessage(`Sorry, we do not have technician coverage in "${trimmedArea}" yet.`);
+      if (isAreaServiced) {
+        setStatus('success');
+        setMessage(`Yes! We provide same-day doorstep service in ${trimmedArea}.`);
+        return;
+      } else {
+        setStatus('success');
+        setMessage(`Yes! Our Chennai & Ambattur mobile units cover ${trimmedArea} and adjacent sectors.`);
         return;
       }
-    }
-
-    // Success simulation
-    setStatus('success');
-    if (trimmedPincode) {
-      setMessage(`Yes! vetikharam is active in pincode ${trimmedPincode} with same-day technician availability.`);
-    } else if (trimmedCity) {
-      setMessage(`Great news! We have active technician teams servicing ${trimmedCity}.`);
-    } else {
-      setMessage(`Yes! We service ${trimmedArea} daily.`);
     }
   };
 
   return (
-    <section className="py-20 bg-neutralBg">
+    <section id="service-area" className="py-20 bg-neutralBg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-primary font-bold text-sm uppercase tracking-wider font-poppins font-semibold">Service Coverage</span>
+          <span className="text-primary font-bold text-sm uppercase tracking-wider font-poppins">Local Coverage</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mt-2 tracking-tight">
-            We Bring Professional Service to Your Doorstep
+            Doorstep Service Across Chennai & Ambattur
           </h2>
           <p className="text-navy/70 mt-4 text-base sm:text-lg">
-            Enter your details below to check if our technicians are currently operating in your residential area.
+            Enter your locality or pincode below to check live technician availability at your address.
           </p>
         </div>
 
@@ -114,8 +113,8 @@ export default function ServiceArea() {
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    placeholder="e.g. New York"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy"
+                    placeholder="e.g. Chennai"
+                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
                   />
                 </div>
 
@@ -126,8 +125,8 @@ export default function ServiceArea() {
                     type="text"
                     value={area}
                     onChange={(e) => setArea(e.target.value)}
-                    placeholder="e.g. Brooklyn"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy"
+                    placeholder="e.g. Ambattur"
+                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
                   />
                 </div>
 
@@ -138,9 +137,9 @@ export default function ServiceArea() {
                     type="text"
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
-                    placeholder="e.g. 10001"
+                    placeholder="e.g. 600053"
                     maxLength="6"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy"
+                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
                   />
                 </div>
 
@@ -151,7 +150,7 @@ export default function ServiceArea() {
                 className="w-full bg-primary hover:bg-primary-dark text-white font-bold p-4 rounded-xl shadow-button-blue transition-all active:scale-[0.98] flex items-center justify-center space-x-2"
               >
                 <Search className="w-4 h-4" />
-                <span>Check Availability</span>
+                <span>Check Technician Availability</span>
               </button>
             </form>
 
@@ -174,21 +173,34 @@ export default function ServiceArea() {
           {/* Service Area Cards */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
             {activeLocations.map((loc) => (
-              <div 
+              <Link 
                 key={loc.city}
-                className="bg-white rounded-2xl p-5 border border-gray-100/80 shadow-premium flex items-start space-x-4"
+                to={`/locations/${loc.id}`}
+                className="bg-white hover:bg-neutralBg/50 transition-all rounded-2xl p-5 border border-gray-100/80 shadow-premium flex items-start space-x-4 group"
               >
-                <div className="bg-primary/5 text-primary p-3 rounded-xl">
+                <div className="bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors p-3 rounded-xl shrink-0">
                   <Building2 className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-navy font-poppins text-base leading-none mb-2">{loc.city}</h4>
-                  <p className="text-xs text-navy/60 leading-relaxed font-medium">
-                    Servicing: {loc.areas}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-bold text-navy font-poppins text-base leading-none mb-1 group-hover:text-primary transition-colors">
+                      {loc.city} Hub
+                    </h4>
+                    <span className="text-[11px] text-primary font-bold">View Hub →</span>
+                  </div>
+                  <p className="text-xs text-navy/60 leading-relaxed font-medium line-clamp-2 mt-1">
+                    Coverage: {loc.areas}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
+
+            <div className="p-4 rounded-2xl bg-primary/5 border border-primary/10 flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-primary shrink-0" />
+              <p className="text-xs text-navy/70 leading-relaxed">
+                Need urgent assistance in an adjacent residential area? Our mobile units are equipped for same-day dispatch.
+              </p>
+            </div>
           </div>
 
         </div>
