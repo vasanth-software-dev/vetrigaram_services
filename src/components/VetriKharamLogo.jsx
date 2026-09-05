@@ -36,7 +36,7 @@ export default function VetriKharamLogo({
       >
         {useStatic ? (
           <img
-            src="/logo-emblem.png"
+            src={`${import.meta.env.BASE_URL}logo-emblem.png`}
             alt={title}
             className="w-full h-full object-cover select-none pointer-events-none"
           />
