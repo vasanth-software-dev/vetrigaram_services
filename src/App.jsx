@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import MobileStickyBar from './components/MobileStickyBar';
@@ -27,6 +27,7 @@ function RouteScrollRestoration() {
 }
 
 function MainLayout() {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedService, setSelectedService] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -67,15 +68,30 @@ function MainLayout() {
   };
 
   const handleBookNow = (category, serviceName) => {
-    console.log(category, serviceName);
-    
     setSelectedCategory(category);
     setSelectedService(serviceName);
-    scrollToBooking();
+
+    const bookingSection = document.getElementById('booking') || document.getElementById('service-booking') || document.getElementById('local-booking');
+    if (bookingSection) {
+      scrollToBooking();
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        scrollToBooking();
+      }, 150);
+    }
   };
 
   const handleGeneralBook = () => {
-    scrollToBooking();
+    const bookingSection = document.getElementById('booking') || document.getElementById('service-booking') || document.getElementById('local-booking');
+    if (bookingSection) {
+      scrollToBooking();
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        scrollToBooking();
+      }, 150);
+    }
   };
 
   const handleResetSelection = () => {

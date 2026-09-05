@@ -87,13 +87,13 @@ export default function LocationDetailPage({ onBookNow }) {
 
             {/* Call to action */}
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link
-                to="/services"
+              <button
+                onClick={() => onBookNow && onBookNow('appliances', '')}
                 className="bg-primary hover:bg-primary-dark text-white font-extrabold px-8 py-3.5 rounded-2xl shadow-button-blue transition-all duration-200 active:scale-95 text-sm sm:text-base flex items-center gap-2"
               >
                 <CalendarDays className="w-5 h-5" />
                 <span>Book Service in {location.name}</span>
-              </Link>
+              </button>
               <a
                 href={`tel:${SITE_CONFIG.phone}`}
                 className="border border-navy/20 bg-white hover:border-navy text-navy font-bold px-6 py-3.5 rounded-2xl transition-all flex items-center gap-2 text-sm sm:text-base"
@@ -184,7 +184,7 @@ export default function LocationDetailPage({ onBookNow }) {
                     onClick={() => onBookNow && onBookNow(service.category, service.name)}
                     className="bg-primary/10 hover:bg-primary text-primary hover:text-white font-bold text-xs py-1.5 px-3 rounded-lg transition-all"
                   >
-                    Book
+                    Book Now
                   </button>
                 </div>
               </article>

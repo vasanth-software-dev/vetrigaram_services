@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   AirVent, IceCream, WashingMachine, Flame, 
   Zap, Power, Wrench, Shield, ArrowRight, 
@@ -11,6 +11,29 @@ import { SERVICES_CATALOG, LOCATIONS_CATALOG } from '../data/seoData';
 import { getBreadcrumbSchema } from '../seo/schemaGenerator';
 
 export default function ServicesPage({ onBookNow }) {
+  const navigate = useNavigate();
+
+  const handleBookNow = (category, serviceName) => {
+    if (onBookNow) {
+      onBookNow(category, serviceName);
+    }
+    navigate('/');
+    setTimeout(() => {
+      const bookingSection = document.getElementById('booking');
+      if (bookingSection) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = bookingSection.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 150);
+  };
   const iconMap = {
     'ac-repair': AirVent,
     'refrigerator-repair': IceCream,
@@ -133,7 +156,7 @@ export default function ServicesPage({ onBookNow }) {
                         </Link>
 
                         <button
-                          onClick={() => onBookNow && onBookNow(service.category, service.name)}
+                          onClick={() => handleBookNow(service.category, service.name)}
                           className="bg-primary/10 hover:bg-primary text-primary hover:text-white font-bold text-xs py-2 px-3.5 rounded-xl transition-all"
                         >
                           Book Now
