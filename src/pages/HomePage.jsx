@@ -74,7 +74,7 @@ export default function HomePage({ onBookClick, onBookNow: externalBookNow, sele
   return (
     <>
       <SeoHead
-        title="Vetrigaram Tech Services | Premium Appliance, Electrical & Plumbing Repair"
+        title="Vetrigaram Tech Services | Premium Appliance Repair"
         description="Vetrigaram Tech Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection."
         canonicalPath="/"
         schemas={schemas}

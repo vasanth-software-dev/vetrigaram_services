@@ -6,7 +6,7 @@ export default function HowItWorks({ onBookClick }) {
     {
       num: "01",
       title: "Choose a Service",
-      desc: "Select from appliance repair, electrical, or plumbing categories and find the specific repair you need.",
+      desc: "Select from appliance repair categories and find the specific repair you need.",
       icon: MousePointerClick,
       color: "text-primary bg-primary/5"
     },
