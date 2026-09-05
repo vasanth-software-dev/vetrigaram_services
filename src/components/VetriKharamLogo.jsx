@@ -47,7 +47,7 @@ export default function VetriKharamLogo({
             loop
             muted
             playsInline
-            poster="/logo-emblem.png"
+            poster={`${import.meta.env.BASE_URL}logo-emblem.png`}
             onLoadedData={() => setVideoLoaded(true)}
             className="w-full h-full object-cover scale-[2.33] origin-[50%_36.6%] select-none pointer-events-none"
             title="Antigravity 3D Emblem"
