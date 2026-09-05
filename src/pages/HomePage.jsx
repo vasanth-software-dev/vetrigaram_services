@@ -29,7 +29,7 @@ const homeFaqs = [
   },
   {
     q: "Are replacement spare parts covered with a warranty?",
-    a: "Yes, all genuine replacement parts (such as AC capacitors, compressors, water valves, switches, or geyser elements) carry authentic manufacturer warranties plus our 30-day Vetrikharam service guarantee."
+    a: "Yes, all genuine replacement parts (such as AC capacitors, compressors, water valves, switches, or geyser elements) carry authentic manufacturer warranties plus our 30-day Vetrigaram service guarantee."
   },
   {
     q: "Can I cancel or reschedule my service appointment?",
@@ -74,8 +74,8 @@ export default function HomePage({ onBookClick, onBookNow: externalBookNow, sele
   return (
     <>
       <SeoHead
-        title="Vetrikharam Home Services | Premium Appliance, Electrical & Plumbing Repair"
-        description="Vetrikharam Home Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection."
+        title="Vetrigaram Tech Services | Premium Appliance, Electrical & Plumbing Repair"
+        description="Vetrigaram Tech Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection."
         canonicalPath="/"
         schemas={schemas}
       />

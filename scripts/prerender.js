@@ -34,7 +34,7 @@ console.log('--- Starting Enterprise SEO Build & Prerender Pipeline ---');
 // Helper to determine route metadata & structured data
 function getRouteMetadata(routePath) {
   let title = `${SITE_CONFIG.brandName} | Premium Appliance, Electrical & Plumbing Repair`;
-  let description = "Vetrikharam Home Services delivers fast, reliable, and professional appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur from verified technicians.";
+  let description = "Vetrigaram Tech Services delivers fast, reliable, and professional appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur from verified technicians.";
   let schemas = [
     getOrganizationSchema(),
     getWebSiteSchema(),
@@ -44,10 +44,10 @@ function getRouteMetadata(routePath) {
   if (routePath === '/') {
     // Homepage
     title = `${SITE_CONFIG.brandName} | Premium Appliance, Electrical & Plumbing Repair`;
-    description = "Vetrikharam Home Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection.";
+    description = "Vetrigaram Tech Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection.";
   } else if (routePath === '/services') {
     title = `All Doorstep Home Services | Appliance, Electrical & Plumbing Repair | ${SITE_CONFIG.shortName}`;
-    description = "Browse all certified doorstep home repair services by Vetrikharam in Chennai and Ambattur. AC servicing, refrigerator fix, electrical troubleshooting, and plumbing.";
+    description = "Browse all certified doorstep home repair services by Vetrigaram in Chennai and Ambattur. AC servicing, refrigerator fix, electrical troubleshooting, and plumbing.";
     schemas.push(getBreadcrumbSchema([{ name: 'Services', url: '/services' }]));
   } else if (routePath.startsWith('/services/')) {
     const slug = routePath.replace('/services/', '');
@@ -66,7 +66,7 @@ function getRouteMetadata(routePath) {
     }
   } else if (routePath === '/locations') {
     title = `Service Locations & Doorstep Coverage | ${SITE_CONFIG.brandName}`;
-    description = "Explore Vetrikharam's active doorstep technician hubs across Chennai and Ambattur. Certified home appliance repair, electrical, and plumbing with fast arrival.";
+    description = "Explore Vetrigaram's active doorstep technician hubs across Chennai and Ambattur. Certified home appliance repair, electrical, and plumbing with fast arrival.";
     schemas.push(getBreadcrumbSchema([{ name: 'Locations', url: '/locations' }]));
   } else if (routePath.startsWith('/locations/')) {
     const slug = routePath.replace('/locations/', '');
@@ -85,14 +85,14 @@ function getRouteMetadata(routePath) {
     }
   } else if (routePath === '/about') {
     title = `About Us | Verified Doorstep Home Technicians | ${SITE_CONFIG.shortName}`;
-    description = "Learn about Vetrikharam Home Services. Our mission is delivering reliable, verified, and warranty-backed appliance, electrical, and plumbing repair across Chennai.";
+    description = "Learn about Vetrigaram Tech Services. Our mission is delivering reliable, verified, and warranty-backed appliance, electrical, and plumbing repair across Chennai.";
     schemas = [
       getOrganizationSchema(),
       getBreadcrumbSchema([{ name: 'About Us', url: '/about' }])
     ];
   } else if (routePath === '/contact') {
     title = `Contact Us & Book a Technician | ${SITE_CONFIG.brandName}`;
-    description = "Contact Vetrikharam Home Services in Chennai & Ambattur. Call +91 6374121120 or book online for fast appliance, electrical, and plumbing repair. Open 8 AM - 9 PM daily.";
+    description = "Contact Vetrigaram Tech Services in Chennai & Ambattur. Call +91 6374121120 or book online for fast appliance, electrical, and plumbing repair. Open 8 AM - 9 PM daily.";
     schemas = [
       getLocalBusinessSchema(),
       getBreadcrumbSchema([{ name: 'Contact', url: '/contact' }])
@@ -224,7 +224,7 @@ console.log(`✓ Generated dist/sitemap.xml with ${ALL_CANONICAL_ROUTES.length} 
 const robotsSource = path.resolve(__dirname, '../public/robots.txt');
 if (fs.existsSync(robotsSource)) {
   fs.copyFileSync(robotsSource, path.join(distDir, 'robots.txt'));
-  console.log('✓ Verified dist/robots.txt points to https://vasanth-software-dev.github.io/vetrikharam_services/sitemap.xml');
+  console.log('✓ Verified dist/robots.txt points to https://vasanth-software-dev.github.io/Vetrigaram_services/sitemap.xml');
 }
 
 console.log('--- Enterprise SEO Build & Prerender Completed Successfully ---');

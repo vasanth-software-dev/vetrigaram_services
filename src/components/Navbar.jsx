@@ -25,7 +25,7 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '#home', path: '/' },
+    // { label: 'Home', href: '#home', path: '/' },
     { label: 'Services', href: '#services', path: '/services' },
     { label: 'Locations', path: '/locations' },
     { label: 'About Us', path: '/about' },
@@ -83,26 +83,26 @@ export default function Navbar() {
         { name: "Geyser & Heater Repair", slug: "geyser-repair" }
       ]
     },
-    {
-      title: "Electrical Services",
-      categoryKey: "electrical",
-      items: [
-        { name: "Electrical Repair", slug: "electrical-repair" },
-        { name: "Switch & Socket Repair", slug: "switch-socket-repair" },
-        { name: "Fan Installation & Repair", slug: "fan-installation" },
-        { name: "Wiring & Rewiring", slug: "wiring-rewiring" }
-      ]
-    },
-    {
-      title: "Plumbing Services",
-      categoryKey: "plumbing",
-      items: [
-        { name: "Plumbing Repair", slug: "plumbing-repair" },
-        { name: "Tap & Faucet Repair", slug: "tap-faucet-repair" },
-        { name: "Drain Cleaning", slug: "drain-cleaning" },
-        { name: "Water Tank Services", slug: "water-tank-services" }
-      ]
-    }
+    // {
+    //   title: "Electrical Services",
+    //   categoryKey: "electrical",
+    //   items: [
+    //     { name: "Electrical Repair", slug: "electrical-repair" },
+    //     { name: "Switch & Socket Repair", slug: "switch-socket-repair" },
+    //     { name: "Fan Installation & Repair", slug: "fan-installation" },
+    //     { name: "Wiring & Rewiring", slug: "wiring-rewiring" }
+    //   ]
+    // },
+    // {
+    //   title: "Plumbing Services",
+    //   categoryKey: "plumbing",
+    //   items: [
+    //     { name: "Plumbing Repair", slug: "plumbing-repair" },
+    //     { name: "Tap & Faucet Repair", slug: "tap-faucet-repair" },
+    //     { name: "Drain Cleaning", slug: "drain-cleaning" },
+    //     { name: "Water Tank Services", slug: "water-tank-services" }
+    //   ]
+    // }
   ];
 
   const handleCategoryItemClick = (slug) => {
@@ -138,7 +138,7 @@ export default function Navbar() {
             <div className="flex items-center space-x-2 sm:space-x-4">
               {/* WhatsApp CTA */}
               <a 
-                href={`https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrikharam!%20Home%20Appliance%20Repair%20and%20Service%20Company`}
+                href={`https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrigaram!%20Home%20Appliance%20Repair%20and%20Service%20Company`}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-2 sm:px-3.5 sm:py-2 rounded-lg font-bold text-xs sm:text-sm transition-all shadow-sm active:scale-95 flex items-center space-x-1.5 shrink-0"
@@ -175,7 +175,7 @@ export default function Navbar() {
       <div className={`fixed top-0 left-0 w-80 max-w-[85%] h-full bg-white shadow-2xl flex flex-col overflow-y-auto transition-transform duration-350 ease-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} z-[9999]`}>
         {/* Drawer Header */}
         <div className="flex justify-between items-center px-5 py-4 bg-[#0B1B3D] text-white h-20 shrink-0 border-b border-[#0066FF]/20">
-          <Logo size="sm" textLight title="Vetrikharam" subtitle="Menu" />
+          <Logo size="sm" textLight title="Vetrigaram" subtitle="Menu" />
           <button onClick={() => setIsOpen(false)} aria-label="Close menu" className="text-white hover:text-orange p-1 transition-colors">
             <X className="w-6 h-6" />
           </button>

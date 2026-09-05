@@ -9,11 +9,18 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import BookingForm from '../components/BookingForm';
 import { getServiceBySlug, SERVICES_CATALOG, LOCATIONS_CATALOG, SITE_CONFIG } from '../data/seoData';
 import { getServiceSchema, getBreadcrumbSchema, getFaqSchema } from '../seo/schemaGenerator';
+import { validateSlug } from '../utils/security';
 
 export default function ServiceDetailPage() {
   const { serviceSlug } = useParams();
-  const service = getServiceBySlug(serviceSlug);
   const [activeFaq, setActiveFaq] = useState(null);
+  const slugCheck = validateSlug(serviceSlug);
+
+  if (!slugCheck.isValid) {
+    return <Navigate to="/services" replace />;
+  }
+
+  const service = getServiceBySlug(slugCheck.sanitized);
 
   if (!service) {
     return <Navigate to="/services" replace />;
@@ -42,7 +49,7 @@ export default function ServiceDetailPage() {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title={`${service.name} | Doorstep Repair & Servicing | Vetrikharam`}
+        title={`${service.name} | Doorstep Repair & Servicing | Vetrigaram`}
         description={`${service.desc} Transparent ₹149 inspection charge adjusted in final bill. 30-day service warranty.`}
         canonicalPath={`/services/${service.id}`}
         schemas={schemas}

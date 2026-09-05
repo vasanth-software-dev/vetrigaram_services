@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from "@emailjs/browser";
 import { servicesData } from './Services';
-import { Calendar, Clock, Phone, MapPin, ClipboardList, CheckCircle2, User, HelpCircle, ArrowRight } from 'lucide-react';
-import { createBooking } from '../api/api';
+import { Calendar, Clock, Phone, MapPin, ClipboardList, CheckCircle2, User, ArrowRight } from 'lucide-react';
 import { DEFAULT_TECHNICIANS } from '../utils/contacts';
+import {
+  validateName,
+  validatePhone,
+  validateAddress,
+  validateDescription,
+  validateCategory,
+  validateService,
+  validateDate,
+  validateTimeSlot,
+  sanitizeText
+} from '../utils/security';
 
 const getLocalDateString = () => {
   const date = new Date();
@@ -15,6 +25,12 @@ const getLocalDateString = () => {
 
 const referenceNum = () => Math.floor(100000 + Math.random() * 900000);
 
+const TIME_SLOTS = [
+  "09:00 AM - 12:00 PM (Morning)",
+  "12:00 PM - 03:00 PM (Afternoon)",
+  "03:00 PM - 06:00 PM (Late Afternoon)",
+  "06:00 PM - 09:00 PM (Evening)"
+];
 
 export default function BookingForm({ initialCategory = '', initialService = '', onResetSelection }) {
   const [formData, setFormData] = useState({
@@ -29,6 +45,7 @@ export default function BookingForm({ initialCategory = '', initialService = '',
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
   const [technician, setTechnician] = useState({ name: '', phone: '' });
@@ -50,128 +67,161 @@ export default function BookingForm({ initialCategory = '', initialService = '',
       category: cat,
       service: ''
     }));
+    if (errors.category) {
+      setErrors(prev => ({ ...prev, category: '' }));
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'phone' ? value.replace(/[^0-9\-+() ]/g, '') : value
+      [name]: value
     }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const validate = () => {
-    let tempErrors = {};
-    if (!formData.name.trim()) tempErrors.name = "Full Name is required";
-    if (!formData.phone.trim()) {
-      tempErrors.phone = "Phone number is required";
-    } else if (formData.phone.trim().length < 8) {
-      tempErrors.phone = "Provide a valid phone number";
+    const tempErrors = {};
+
+    // 1. Name validation
+    const nameCheck = validateName(formData.name, { isRequired: true, maxLength: 70 });
+    if (!nameCheck.isValid) {
+      tempErrors.name = nameCheck.error;
     }
-    // if (!formData.category) tempErrors.category = "Please select a service category";
-    // if (!formData.service) tempErrors.service = "Please select a service";
-    // if (!formData.date) tempErrors.date = "Please select a preferred date";
-    // if (!formData.time) tempErrors.time = "Please select a preferred time slot";
-    // if (!formData.address.trim()) tempErrors.address = "Full address is required";
-    
+
+    // 2. Phone validation
+    const phoneCheck = validatePhone(formData.phone, { isRequired: true });
+    if (!phoneCheck.isValid) {
+      tempErrors.phone = phoneCheck.error;
+    }
+
+    // 3. Category validation (optional)
+    if (formData.category) {
+      const catCheck = validateCategory(formData.category, ['appliances', 'electrical', 'plumbing']);
+      if (!catCheck.isValid) {
+        tempErrors.category = catCheck.error;
+      }
+    }
+
+    // 4. Service validation (optional)
+    if (formData.service) {
+      const allowedServices = formData.category && servicesData[formData.category]
+        ? servicesData[formData.category].items.map(item => item.name)
+        : [];
+      const serviceCheck = validateService(formData.service, allowedServices);
+      if (!serviceCheck.isValid) {
+        tempErrors.service = serviceCheck.error;
+      }
+    }
+
+    // 5. Date validation (optional)
+    if (formData.date) {
+      const dateCheck = validateDate(formData.date, { isRequired: false, maxDaysAhead: 90 });
+      if (!dateCheck.isValid) {
+        tempErrors.date = dateCheck.error;
+      }
+    }
+
+    // 6. Time validation (optional)
+    if (formData.time) {
+      const timeCheck = validateTimeSlot(formData.time, TIME_SLOTS, { isRequired: false });
+      if (!timeCheck.isValid) {
+        tempErrors.time = timeCheck.error;
+      }
+    }
+
+    // 7. Address validation (optional)
+    if (formData.address && formData.address.trim()) {
+      const addressCheck = validateAddress(formData.address, { isRequired: false, maxLength: 300 });
+      if (!addressCheck.isValid) {
+        tempErrors.address = addressCheck.error;
+      }
+    }
+
+    // 8. Problem description validation (optional)
+    if (formData.problem && formData.problem.trim()) {
+      const problemCheck = validateDescription(formData.problem, { isRequired: false, maxLength: 1000 });
+      if (!problemCheck.isValid) {
+        tempErrors.problem = problemCheck.error;
+      }
+    }
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
+    if (!validate()) return;
+    if (isSubmitting) return;
 
-       // Prevent multiple submissions
-      if (isSubmitted) return;
+    setIsSubmitting(true);
+
+    try {
+      const reference_num = "FX-" + referenceNum();
+
+      // Build explicit, sanitized payload with safe defaults
+      const cleanName = validateName(formData.name).sanitized || sanitizeText(formData.name);
+      const cleanPhone = validatePhone(formData.phone).sanitized || sanitizeText(formData.phone);
+      const cleanAddress = formData.address.trim() 
+        ? (validateAddress(formData.address).sanitized || sanitizeText(formData.address)) 
+        : "Not provided";
+      const cleanCategory = formData.category ? sanitizeText(formData.category) : "Not provided";
+      const cleanService = formData.service ? sanitizeText(formData.service) : "Not provided";
+      const cleanDate = formData.date ? sanitizeText(formData.date) : "Not provided";
+      const cleanTime = formData.time ? sanitizeText(formData.time) : "Not provided";
+      const cleanProblem = formData.problem.trim() 
+        ? (validateDescription(formData.problem).sanitized || sanitizeText(formData.problem, { allowNewlines: true }))
+        : "Not provided";
+
+      const templateParams = {
+        reference_num,
+        name: cleanName,
+        phone: cleanPhone,
+        address: cleanAddress,
+        service_category: cleanCategory,
+        service: cleanService,
+        preferred_date: cleanDate,
+        preferred_time: cleanTime,
+        problem_description: cleanProblem,
+        request_received_on: new Date().toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        }),
+      };
+
+      await emailjs.send(
+        "service_0j3nlam",
+        "template_fhth66j",
+        templateParams,
+        "7fEFpmWyNsuPUUzKF"
+      );          
+
+      setBookingRef(reference_num);
+
+      const technicians = DEFAULT_TECHNICIANS;
+      const randomTech = technicians[Math.floor(Math.random() * technicians.length)];
+
+      setTechnician({
+        name: randomTech.name,
+        phone: String(randomTech.phone),
+      });
+
       setIsSubmitted(true);
+      setErrors({});
 
-      try {
-        // const bookingData = {
-        //   name: formData.name,
-        //   phone: formData.phone,
-        //   service_category: formData.category,
-        //   service: formData.service,
-        //   address: formData.address,
-        //   preferred_date: formData.date,
-        //   preferred_time: formData.time,
-        //   problem_description: formData.problem
-        // };
-        
-        // const result = await createBooking(bookingData);
-
-        const reference_num = "FX-"+referenceNum();
-
-        const templateParams = {
-          reference_num: reference_num,
-          name: formData.name,
-          phone: formData.phone,
-          address: formData.address || "Not provided",
-
-          service_category: formData.service_category || "Not provided",
-          service: formData.service || "Not provided",
-          preferred_date: formData.date || "Not provided",
-          preferred_time: formData.time || "Not provided",
-
-          problem_description: formData.problem_description || "Not provided",
-
-          request_received_on: new Date().toLocaleString("en-IN", {
-            timeZone: "Asia/Kolkata",
-          }),
-        };
-
-        await emailjs.send(
-            "service_0j3nlam",
-            "template_fhth66j",
-            templateParams,
-            "7fEFpmWyNsuPUUzKF"
-        );          
-
-        setBookingRef(reference_num);
-
-        const technicians = DEFAULT_TECHNICIANS;
-        const randomTech = technicians[Math.floor(Math.random() * technicians.length)];
-
-        setTechnician({
-          name: randomTech.name,
-          phone: randomTech.phone,
-        });
-
-        setIsSubmitted(true);
-
-        form.reset();
-
-      } catch (err) {
-        
-        if (err.status === 400 && Array.isArray(err.errors)) {
-          const apiErrors = {};
-
-          err.errors.forEach((e) => {
-            let field = e.field;
-            if (field === 'service_category') field = 'category';
-            if (field === 'preferred_date') field = 'date';
-            if (field === 'preferred_time') field = 'time';
-            if (field === 'problem_description') field = 'problem';
-            apiErrors[field] = e.message;
-          });
-
-          setErrors(apiErrors);
-          return;
-        }
-
-        console.log(err);
-          
-      }finally {
-        setIsSubmitted(false);
-      }
-      
-      
-      
       // Scroll to the booking section to see confirmation card
       const formSection = document.getElementById('booking');
       if (formSection) {
         formSection.scrollIntoView({ behavior: 'smooth' });
       }
+    } catch (err) {
+      console.error("Booking submission error:", err);
+      setErrors({ submit: "Booking request could not be sent. Please call our hotline or try again." });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -188,15 +238,11 @@ export default function BookingForm({ initialCategory = '', initialService = '',
     });
     setErrors({});
     setIsSubmitted(false);
+    setIsSubmitting(false);
     if (onResetSelection) onResetSelection();
   };
 
-  const timeSlots = [
-    "09:00 AM - 12:00 PM (Morning)",
-    "12:00 PM - 03:00 PM (Afternoon)",
-    "03:00 PM - 06:00 PM (Late Afternoon)",
-    "06:00 PM - 09:00 PM (Evening)"
-  ];
+  const timeSlots = TIME_SLOTS;
 
   return (
     <section id="booking" className="py-20 bg-white">
@@ -224,12 +270,15 @@ export default function BookingForm({ initialCategory = '', initialService = '',
               {/* Row 1: Name and Phone */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Full Name</label>
+                  <label htmlFor="booking-name" className="block text-sm font-semibold text-navy mb-2 font-poppins">Full Name</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
+                      id="booking-name"
                       type="text"
                       name="name"
+                      maxLength={70}
+                      autoComplete="name"
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
@@ -240,15 +289,18 @@ export default function BookingForm({ initialCategory = '', initialService = '',
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Phone Number</label>
+                  <label htmlFor="booking-phone" className="block text-sm font-semibold text-navy mb-2 font-poppins">Phone Number</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
+                      id="booking-phone"
                       type="tel"
                       name="phone"
+                      maxLength={15}
+                      autoComplete="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="(555) 000-0000"
+                      placeholder="6374121120 or +91..."
                       className={`w-full bg-white pl-12 pr-4 py-3.5 rounded-xl border ${errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-200'} font-medium text-navy text-[15px]`}
                     />
                   </div>
@@ -259,9 +311,10 @@ export default function BookingForm({ initialCategory = '', initialService = '',
               {/* Row 2: Category and Service */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Service Category (Optional)</label>
+                  <label htmlFor="booking-category" className="block text-sm font-semibold text-navy mb-2 font-poppins">Service Category (Optional)</label>
                   <div className="relative">
                     <select
+                      id="booking-category"
                       name="category"
                       value={formData.category}
                       onChange={handleCategoryChange}
@@ -280,9 +333,10 @@ export default function BookingForm({ initialCategory = '', initialService = '',
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Select Service (Optional)</label>
+                  <label htmlFor="booking-service" className="block text-sm font-semibold text-navy mb-2 font-poppins">Select Service (Optional)</label>
                   <div className="relative">
                     <select
+                      id="booking-service"
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
@@ -307,10 +361,11 @@ export default function BookingForm({ initialCategory = '', initialService = '',
               {/* Row 3: Date and Time */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Preferred Date (Optional)</label>
+                  <label htmlFor="booking-date" className="block text-sm font-semibold text-navy mb-2 font-poppins">Preferred Date (Optional)</label>
                   <div className="relative">
                     <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                     <input
+                      id="booking-date"
                       type="date"
                       name="date"
                       value={formData.date}
@@ -323,10 +378,11 @@ export default function BookingForm({ initialCategory = '', initialService = '',
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Preferred Time (Optional)</label>
+                  <label htmlFor="booking-time" className="block text-sm font-semibold text-navy mb-2 font-poppins">Preferred Time (Optional)</label>
                   <div className="relative">
                     <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                     <select
+                      id="booking-time"
                       name="time"
                       value={formData.time}
                       onChange={handleChange}
@@ -347,11 +403,13 @@ export default function BookingForm({ initialCategory = '', initialService = '',
 
               {/* Row 4: Address */}
               <div>
-                <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Full Address (Optional)</label>
+                <label htmlFor="booking-address" className="block text-sm font-semibold text-navy mb-2 font-poppins">Full Address (Optional)</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-[18px] w-5 h-5 text-gray-400" />
                   <textarea
+                    id="booking-address"
                     name="address"
+                    maxLength={300}
                     value={formData.address}
                     onChange={handleChange}
                     rows="2.5"
@@ -364,27 +422,37 @@ export default function BookingForm({ initialCategory = '', initialService = '',
 
               {/* Row 5: Problem Description */}
               <div>
-                <label className="block text-sm font-semibold text-navy mb-2 font-poppins">Problem Description (Optional)</label>
+                <label htmlFor="booking-problem" className="block text-sm font-semibold text-navy mb-2 font-poppins">Problem Description (Optional)</label>
                 <div className="relative">
                   <ClipboardList className="absolute left-4 top-[18px] w-5 h-5 text-gray-400" />
                   <textarea
+                    id="booking-problem"
                     name="problem"
+                    maxLength={1000}
                     value={formData.problem}
                     onChange={handleChange}
                     rows="3.5"
                     placeholder="Please describe the issue in detail (e.g. leaking noise, faulty switch, no cooling...)"
-                    className="w-full bg-white pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 font-medium text-navy text-[15px] resize-none"
+                    className={`w-full bg-white pl-12 pr-4 py-3.5 rounded-xl border ${errors.problem ? 'border-red-500' : 'border-gray-200'} font-medium text-navy text-[15px] resize-none`}
                   />
                 </div>
+                {errors.problem && <p className="text-red-500 text-xs mt-1.5 font-medium">{errors.problem}</p>}
               </div>
+
+              {errors.submit && (
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+                  {errors.submit}
+                </div>
+              )}
 
               {/* Submit Button */}
               <div>
-                <button disabled={isSubmitted}
+                <button
+                  disabled={isSubmitting}
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-extrabold py-4 rounded-2xl shadow-button-blue transition-all duration-200 text-[16px] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                  className="w-full bg-primary hover:bg-primary-dark disabled:bg-primary/60 text-white font-extrabold py-4 rounded-2xl shadow-button-blue transition-all duration-200 text-[16px] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                 >
-                    {isSubmitted ? "Submitting..." : "Confirm Booking"}
+                  {isSubmitting ? "Submitting..." : "Confirm Booking"}
                 </button>
                 <p className="text-center text-xs text-navy/60 mt-3 font-semibold font-poppins">
                   ★ Per visit (Inspection charge) ₹149 applies if no service is availed (waived off if service is taken).

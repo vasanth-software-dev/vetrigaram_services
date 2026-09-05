@@ -1,7 +1,7 @@
-# Enterprise SEO Audit: Vetrikharam Home Services
+# Enterprise SEO Audit: Vetrigaram Tech Services
 
-**Repository**: `vasanth-software-dev/vetrikharam_services`  
-**Deployment Target**: GitHub Pages (`https://vasanth-software-dev.github.io/vetrikharam_services/`)  
+**Repository**: `vasanth-software-dev/Vetrigaram_services`  
+**Deployment Target**: GitHub Pages (`https://vasanth-software-dev.github.io/Vetrigaram_services/`)  
 **Architecture**: React 19 + Vite 8 + Tailwind CSS 3 (Single-Page Application)  
 **Date**: September 2026  
 **Auditor**: Senior Enterprise SEO Engineer & Technical SEO Architect  
@@ -10,7 +10,7 @@
 
 ## Executive Summary
 
-Vetrikharam Home Services provides doorstep appliance repair (AC, refrigerator, washing machine, geyser), electrical solutions, and plumbing services. Currently, the application is structured as a **single-page React application (SPA)** served with client-side routing on GitHub Pages. While the design is modern and clean, the site exhibits critical enterprise-level SEO deficiencies:
+Vetrigaram Tech Services provides doorstep appliance repair (AC, refrigerator, washing machine, geyser), electrical solutions, and plumbing services. Currently, the application is structured as a **single-page React application (SPA)** served with client-side routing on GitHub Pages. While the design is modern and clean, the site exhibits critical enterprise-level SEO deficiencies:
 
 1. **Zero Indexable Deep URLs**: All services, reviews, FAQs, and contact points exist solely on one landing page via hash anchors (`#services`, `#faq`).
 2. **Missing Meta Infrastructure**: No dynamic canonical URLs, no Open Graph site name, no Twitter Card tags, and a duplicate `og:type` tag.
@@ -27,11 +27,11 @@ Vetrikharam Home Services provides doorstep appliance repair (AC, refrigerator, 
 
 | Item | Current State | Issue | Priority | Recommended Solution |
 | :--- | :--- | :--- | :--- | :--- |
-| `<title>` | Hardcoded in `index.html`: `"vetikharam Home Services \| Premium Appliance, Electrical & Plumbing Repair"` | Lowercase brand name "vetikharam"; identical title across the entire site; no page-specific titles. | **P0 (Critical)** | Implement centralized SEO manager dynamically generating titles per route (e.g. `AC Repair & Servicing in Chennai \| Vetrikharam Home Services`). |
+| `<title>` | Hardcoded in `index.html`: `"vetikharam Home Services \| Premium Appliance, Electrical & Plumbing Repair"` | Lowercase brand name "vetikharam"; identical title across the entire site; no page-specific titles. | **P0 (Critical)** | Implement centralized SEO manager dynamically generating titles per route (e.g. `AC Repair & Servicing in Chennai \| Vetrigaram Tech Services`). |
 | `<meta name="description">` | Hardcoded single description in `index.html`. | Same description for all user intents; doesn't describe individual services or localities. | **P0 (Critical)** | Provide unique, intent-driven meta descriptions (150–160 chars) per service, location, and info page. |
-| Canonical URLs | **Completely Missing** | Risk of duplicate content penalties across query params, GitHub Pages trailing slashes, and staging URLs. | **P0 (Critical)** | Enforce absolute canonical URLs on every page using `https://vasanth-software-dev.github.io/vetrikharam_services/...`. |
+| Canonical URLs | **Completely Missing** | Risk of duplicate content penalties across query params, GitHub Pages trailing slashes, and staging URLs. | **P0 (Critical)** | Enforce absolute canonical URLs on every page using `https://vasanth-software-dev.github.io/Vetrigaram_services/...`. |
 | Robots Directive | **Completely Missing** | No `<meta name="robots">` tag. Crawler indexing rules rely purely on defaults. | **P1 (High)** | Set `<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">` on canonical pages and `noindex, follow` on 404/system routes. |
-| Open Graph | Present in `index.html` with basic properties, but: (1) Duplicate `og:type="website"` tags on lines 10 & 12; (2) `og:description` is only `"Vetrikharam Services"`; (3) Missing `og:site_name`, `og:locale`. | Low engagement on social shares; duplicate tags cause parser warnings. | **P1 (High)** | Clean up duplicates; provide rich page-specific `og:title`, `og:description`, `og:image`, `og:site_name="Vetrikharam Home Services"`, and `og:locale="en_IN"`. |
+| Open Graph | Present in `index.html` with basic properties, but: (1) Duplicate `og:type="website"` tags on lines 10 & 12; (2) `og:description` is only `"Vetrigaram Services"`; (3) Missing `og:site_name`, `og:locale`. | Low engagement on social shares; duplicate tags cause parser warnings. | **P1 (High)** | Clean up duplicates; provide rich page-specific `og:title`, `og:description`, `og:image`, `og:site_name="Vetrigaram Tech Services"`, and `og:locale="en_IN"`. |
 | Twitter Cards | **Completely Missing** | No `twitter:card`, `twitter:title`, `twitter:description`, or `twitter:image`. | **P1 (High)** | Implement Twitter summary large image card metadata across all routes. |
 | Favicon & Icons | Inline SVG data URI `data:image/svg+xml,...🛠️...` in `index.html`. | Incomplete brand icon set; no Apple touch icon or standardized web manifest icon links. | **P2 (Medium)** | Link standard `/favicon.svg` and provide `apple-touch-icon` links. |
 
@@ -41,7 +41,7 @@ Vetrikharam Home Services provides doorstep appliance repair (AC, refrigerator, 
 
 | Current State | Problems Identified | Priority | Recommended Solution |
 | :--- | :--- | :--- | :--- |
-| Flat single-page application (`/` or `/vetrikharam_services/`). Section links use hash anchors (`#services`, `#why-us`, `#reviews`, `#faq`, `#contact`). | • Search crawlers do not index hash fragments as distinct pages.<br>• Cannot rank for high-intent keywords like *"AC repair Chennai"*, *"emergency electrician Ambattur"*, or *"plumbing services near me"*.<br>• Lack of deep linking for advertising and customer support. | **P0 (Critical)** | Implement a modern routing architecture with clean URLs:<br>• `/` (Homepage)<br>• `/services` (Services Catalog)<br>• `/services/[service-slug]` (Individual Services)<br>• `/locations` (Coverage Areas)<br>• `/locations/[location-slug]` (City/Locality Pages)<br>• `/[location-slug]/[service-slug]` (Local Service Pages: e.g. `/chennai/ac-repair`)<br>• `/about` (Company & Mission)<br>• `/contact` (Contact & Support) |
+| Flat single-page application (`/` or `/Vetrigaram_services/`). Section links use hash anchors (`#services`, `#why-us`, `#reviews`, `#faq`, `#contact`). | • Search crawlers do not index hash fragments as distinct pages.<br>• Cannot rank for high-intent keywords like *"AC repair Chennai"*, *"emergency electrician Ambattur"*, or *"plumbing services near me"*.<br>• Lack of deep linking for advertising and customer support. | **P0 (Critical)** | Implement a modern routing architecture with clean URLs:<br>• `/` (Homepage)<br>• `/services` (Services Catalog)<br>• `/services/[service-slug]` (Individual Services)<br>• `/locations` (Coverage Areas)<br>• `/locations/[location-slug]` (City/Locality Pages)<br>• `/[location-slug]/[service-slug]` (Local Service Pages: e.g. `/chennai/ac-repair`)<br>• `/about` (Company & Mission)<br>• `/contact` (Contact & Support) |
 
 ---
 

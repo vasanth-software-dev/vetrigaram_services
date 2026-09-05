@@ -7,11 +7,18 @@ import SeoHead from '../seo/SeoHead';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { getLocationBySlug, SERVICES_CATALOG, SITE_CONFIG } from '../data/seoData';
 import { getLocalBusinessSchema, getBreadcrumbSchema, getFaqSchema } from '../seo/schemaGenerator';
+import { validateSlug } from '../utils/security';
 
 export default function LocationDetailPage({ onBookNow }) {
   const { locationSlug } = useParams();
-  const location = getLocationBySlug(locationSlug);
   const [activeFaq, setActiveFaq] = useState(null);
+  const slugCheck = validateSlug(locationSlug);
+
+  if (!slugCheck.isValid) {
+    return <Navigate to="/locations" replace />;
+  }
+
+  const location = getLocationBySlug(slugCheck.sanitized);
 
   if (!location) {
     return <Navigate to="/locations" replace />;

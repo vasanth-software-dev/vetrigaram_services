@@ -8,128 +8,241 @@ import { SITE_CONFIG } from '../data/seoData';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const serviceLinks = [
+    { label: 'AC Repair & Service', to: '/services/ac-repair' },
+    { label: 'Refrigerator Repair', to: '/services/refrigerator-repair' },
+    { label: 'Washing Machine Repair', to: '/services/washing-machine-repair' },
+    { label: 'Geyser / Heater Repair', to: '/services/geyser-repair' },
+  ];
+
+  const companyLinks = [
+    { label: 'Chennai Hub', to: '/locations/chennai' },
+    { label: 'Ambattur Hub', to: '/locations/ambattur' },
+    { label: 'All Service Locations', to: '/locations' },
+    { label: 'About Us', to: '/about' },
+    { label: 'Contact Support', to: '/contact' },
+  ];
+
+  const socialLinks = [
+    {
+      label: 'Facebook',
+      href: 'https://facebook.com/Vetrigaramservices',
+      icon: (
+        <svg
+          className="h-4 w-4"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1V12h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Instagram',
+      href: 'https://instagram.com/Vetrigaramservices',
+      icon: (
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Twitter',
+      href: 'https://twitter.com/Vetrigaramservices',
+      icon: (
+        <svg
+          className="h-4 w-4"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <footer id="contact" className="bg-navy-dark text-gray-300 pt-16 pb-8 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Top Section: Branding & Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12">
-          
-          {/* Brand Info */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2 flex flex-col space-y-4">
-            <Link to="/" className="inline-flex group focus:outline-none">
+    <footer
+      id="contact"
+      className="border-t border-white/5 bg-navy-dark text-gray-300"
+    >
+      <div className="mx-auto max-w-7xl px-4 pt-14 pb-8 sm:px-6 lg:px-8">
+        {/* Main footer */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
+          {/* Brand */}
+          <div className="sm:col-span-2 lg:col-span-2">
+            <Link
+              to="/"
+              className="inline-flex rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-navy-dark"
+              aria-label={`${SITE_CONFIG.brandName} home`}
+            >
               <Logo size="md" textLight />
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              Your trusted partner for certified home appliance, electrical troubleshooting, and plumbing repairs across Chennai and Ambattur. Doorstep service with warranty protection.
+
+            <p className="mt-5 max-w-md text-sm leading-6 text-gray-400">
+              Your trusted partner for certified home appliance, electrical
+              troubleshooting, and plumbing repairs across Chennai and
+              Ambattur. Doorstep service with warranty protection.
             </p>
-            
-            {/* Contact details */}
-            <div className="space-y-2 pt-2">
-              <a 
-                href={`tel:${SITE_CONFIG.phone}`} 
-                className="flex items-center space-x-2.5 text-sm hover:text-primary transition-colors"
+
+            {/* Contact information */}
+            <div className="mt-6 space-y-3">
+              <a
+                href={`tel:${SITE_CONFIG.phone}`}
+                className="group flex items-center gap-3 text-sm transition-colors hover:text-primary"
+                aria-label={`Call ${CONTACT_NUMBER}`}
               >
-                <Phone className="w-4 h-4 text-orange shrink-0" />
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <Phone className="h-4 w-4 text-orange" />
+                </span>
                 <span>{CONTACT_NUMBER}</span>
               </a>
-              <a 
-                href={`mailto:${CONTACT_EMAIL}`} 
-                className="flex items-center space-x-2.5 text-sm hover:text-primary transition-colors"
+
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="group flex items-center gap-3 text-sm transition-colors hover:text-primary"
+                aria-label={`Email ${CONTACT_EMAIL}`}
               >
-                <Mail className="w-4 h-4 text-primary shrink-0" />
-                <span>{CONTACT_EMAIL}</span>
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <Mail className="h-4 w-4 text-primary" />
+                </span>
+                <span className="break-all">{CONTACT_EMAIL}</span>
               </a>
-              <div className="flex items-center space-x-2.5 text-sm text-gray-400">
-                <Clock className="w-4 h-4 text-gray-500 shrink-0" />
-                <span>08:00 AM - 09:00 PM Daily</span>
+
+              <div className="flex items-center gap-3 text-sm text-gray-400">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <Clock className="h-4 w-4 text-gray-500" />
+                </span>
+                <span>08:00 AM – 09:00 PM Daily</span>
               </div>
-              <div className="flex items-center space-x-2.5 text-sm text-gray-400">
-                <MapPin className="w-4 h-4 text-orange shrink-0" />
+
+              <div className="flex items-center gap-3 text-sm text-gray-400">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                  <MapPin className="h-4 w-4 text-orange" />
+                </span>
                 <span>Ambattur Industrial Estate, Chennai</span>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Appliance Services */}
+          {/* Appliance services */}
           <div>
-            <h4 className="text-white font-semibold font-poppins text-[15px] mb-4">Appliance Repair</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/services/ac-repair" className="hover:text-primary transition-colors">AC Repair & Service</Link></li>
-              <li><Link to="/services/refrigerator-repair" className="hover:text-primary transition-colors">Refrigerator Repair</Link></li>
-              <li><Link to="/services/washing-machine-repair" className="hover:text-primary transition-colors">Washing Machine Repair</Link></li>
-              <li><Link to="/services/geyser-repair" className="hover:text-primary transition-colors">Geyser / Heater Repair</Link></li>
+            <h2 className="font-poppins text-[15px] font-semibold text-white">
+              Appliance Repair
+            </h2>
+
+            <ul className="mt-5 space-y-3">
+              {serviceLinks.map((service) => (
+                <li key={service.to}>
+                  <Link
+                    to={service.to}
+                    className="text-sm text-gray-400 transition-colors hover:text-primary"
+                  >
+                    {service.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Electrical Services */}
+          {/* Coverage & company */}
           <div>
-            <h4 className="text-white font-semibold font-poppins text-[15px] mb-4">Electrical Services</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/services/electrical-repair" className="hover:text-primary transition-colors">Electrical Diagnostics</Link></li>
-              <li><Link to="/services/fan-installation" className="hover:text-primary transition-colors">Fan Installation & Repair</Link></li>
-              <li><Link to="/services/wiring-rewiring" className="hover:text-primary transition-colors">Wiring & Rewiring</Link></li>
-              <li><Link to="/services/switch-socket-repair" className="hover:text-primary transition-colors">Switch & Socket Fix</Link></li>
+            <h2 className="font-poppins text-[15px] font-semibold text-white">
+              Coverage & Info
+            </h2>
+
+            <ul className="mt-5 space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-gray-400 transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: Plumbing Services */}
+          {/* Support */}
           <div>
-            <h4 className="text-white font-semibold font-poppins text-[15px] mb-4">Plumbing Services</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/services/plumbing-repair" className="hover:text-primary transition-colors">General Plumbing Fix</Link></li>
-              <li><Link to="/services/tap-faucet-repair" className="hover:text-primary transition-colors">Tap & Faucet Repair</Link></li>
-              <li><Link to="/services/drain-cleaning" className="hover:text-primary transition-colors">Drain Block Cleaning</Link></li>
-              <li><Link to="/services/water-tank-services" className="hover:text-primary transition-colors">Water Tank Services</Link></li>
-            </ul>
-          </div>
+            <h2 className="font-poppins text-[15px] font-semibold text-white">
+              Customer Support
+            </h2>
 
-          {/* Column 5: Locations & Company */}
-          <div>
-            <h4 className="text-white font-semibold font-poppins text-[15px] mb-4">Coverage & Info</h4>
-            <ul className="space-y-2.5 text-sm mb-4">
-              <li><Link to="/locations/chennai" className="hover:text-primary transition-colors">Chennai Hub</Link></li>
-              <li><Link to="/locations/ambattur" className="hover:text-primary transition-colors">Ambattur Hub</Link></li>
-              <li><Link to="/locations" className="hover:text-primary transition-colors">All Service Locations</Link></li>
-              <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Support</Link></li>
-            </ul>
-          </div>
+            <p className="mt-5 text-sm leading-6 text-gray-400">
+              Need help with an appliance, electrical issue, or plumbing
+              problem? Our support team is ready to assist.
+            </p>
 
+            <Link
+              to="/contact"
+              className="mt-5 inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-navy-dark"
+            >
+              Book a Service
+            </Link>
+          </div>
         </div>
 
-        {/* Bottom Section: Socials, Copyright, Legal */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          
-          {/* Social links */}
-          <div className="flex items-center space-x-4">
-            <a href="https://facebook.com/vetrikharamservices" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-primary text-gray-300 hover:text-white p-2.5 rounded-xl transition-all" aria-label="Facebook">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1V12h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
-            </a>
-            <a href="https://twitter.com/vetrikharam" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-primary text-gray-300 hover:text-white p-2.5 rounded-xl transition-all" aria-label="Twitter">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="https://instagram.com/vetrikharamservices" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-primary text-gray-300 hover:text-white p-2.5 rounded-xl transition-all" aria-label="Instagram">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="https://linkedin.com/company/vetrikharam-services" target="_blank" rel="noopener noreferrer" className="bg-white/5 hover:bg-primary text-gray-300 hover:text-white p-2.5 rounded-xl transition-all" aria-label="LinkedIn">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-          </div>
+        {/* Bottom footer */}
+        <div className="mt-12 border-t border-white/5 pt-7">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            {/* Social links */}
+            <div className="flex items-center gap-2">
+              {socialLinks.map(({ label, href, icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit our ${label} page`}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-gray-400 transition-all hover:-translate-y-0.5 hover:bg-primary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-navy-dark"
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
 
-          {/* Copyright */}
-          <div className="text-xs text-gray-500 text-center md:text-left">
-            <span>© {currentYear} {SITE_CONFIG.brandName}. All rights reserved.</span>
-          </div>
+            {/* Copyright */}
+            <p className="order-3 text-center text-xs text-gray-500 md:order-2">
+              © {currentYear} {SITE_CONFIG.brandName}. All rights reserved.
+            </p>
 
-          {/* Quick links */}
-          <div className="flex space-x-6 text-xs text-gray-500">
-            <Link to="/about" className="hover:text-gray-300 transition-colors">Privacy & Terms</Link>
-            <Link to="/contact" className="hover:text-gray-300 transition-colors">Doorstep Support</Link>
-          </div>
+            {/* Legal / quick links */}
+            <nav
+              className="order-2 flex items-center justify-center gap-5 text-xs text-gray-500 md:order-3"
+              aria-label="Footer navigation"
+            >
+              <Link
+                to="/about"
+                className="transition-colors hover:text-gray-300"
+              >
+                Privacy & Terms
+              </Link>
 
+              <Link
+                to="/contact"
+                className="transition-colors hover:text-gray-300"
+              >
+                Doorstep Support
+              </Link>
+            </nav>
+          </div>
         </div>
-
       </div>
     </footer>
   );

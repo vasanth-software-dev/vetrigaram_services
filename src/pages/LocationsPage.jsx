@@ -19,8 +19,8 @@ export default function LocationsPage() {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title="Service Locations & Doorstep Coverage | Vetrikharam Home Services"
-        description="Explore Vetrikharam's active doorstep technician hubs across Chennai and Ambattur. Certified home appliance repair, electrical, and plumbing with fast arrival."
+        title="Service Locations & Doorstep Coverage | Vetrigaram Tech Services"
+        description="Explore Vetrigaram's active doorstep technician hubs across Chennai and Ambattur. Certified home appliance repair, electrical, and plumbing with fast arrival."
         canonicalPath="/locations"
         schemas={schemas}
       />

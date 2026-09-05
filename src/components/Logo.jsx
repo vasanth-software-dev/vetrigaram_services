@@ -1,1 +1,1 @@
-export { default } from './VetriKharamLogo';
+export { default } from './VetrigaramLogo';

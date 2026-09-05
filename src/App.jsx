@@ -67,6 +67,8 @@ function MainLayout() {
   };
 
   const handleBookNow = (category, serviceName) => {
+    console.log(category, serviceName);
+    
     setSelectedCategory(category);
     setSelectedService(serviceName);
     scrollToBooking();
@@ -136,7 +138,7 @@ function MainLayout() {
         {/* WhatsApp Floating Button */}
         <a
           href={
-            `https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrikharam!%20Home%20Appliance%20Repair%20and%20Service%20Company`
+            `https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrigaram!%20Home%20Appliance%20Repair%20and%20Service%20Company`
           }
           target="_blank"
           rel="noopener noreferrer"

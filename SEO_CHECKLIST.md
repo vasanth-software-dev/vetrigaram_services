@@ -1,7 +1,7 @@
 # Enterprise SEO Launch & Quality Checklist
 
-**Client**: Vetrikharam Home Services  
-**Target Environment**: GitHub Pages (`https://vasanth-software-dev.github.io/vetrikharam_services/`)  
+**Client**: Vetrigaram Tech Services  
+**Target Environment**: GitHub Pages (`https://vasanth-software-dev.github.io/Vetrigaram_services/`)  
 **Status**: Ready for Production Launch  
 
 ---
@@ -11,7 +11,7 @@
 - [x] **Robots Configuration (`public/robots.txt`)**
   - [x] Disallow rules allow legitimate crawlers to access all public pages, JS, CSS, and images.
   - [x] Private paths (`/api/`) and duplicate query patterns are properly blocked.
-  - [x] Sitemap directive references `https://vasanth-software-dev.github.io/vetrikharam_services/sitemap.xml`.
+  - [x] Sitemap directive references `https://vasanth-software-dev.github.io/Vetrigaram_services/sitemap.xml`.
 
 - [x] **XML Sitemap (`dist/sitemap.xml`)**
   - [x] Sitemap is automatically generated on build.
@@ -35,11 +35,11 @@
 ## 2. Page-Level Metadata & Social Tags
 
 - [x] **Unique `<title>` Tags**
-  - [x] Homepage: `"Vetrikharam Home Services | Premium Appliance, Electrical & Plumbing Repair"`.
-  - [x] Services: `"AC Repair & Servicing | Doorstep Repair & Servicing | Vetrikharam"`.
-  - [x] Locations: `"Home Services in Chennai | Appliance, Electrical & Plumbing Repair | Vetrikharam"`.
-  - [x] Local Services: `"AC Repair & Servicing in Chennai | Doorstep Service | Vetrikharam"`.
-  - [x] 404 Page: `"Page Not Found (404) | Vetrikharam Home Services"`.
+  - [x] Homepage: `"Vetrigaram Tech Services | Premium Appliance, Electrical & Plumbing Repair"`.
+  - [x] Services: `"AC Repair & Servicing | Doorstep Repair & Servicing | Vetrigaram"`.
+  - [x] Locations: `"Home Services in Chennai | Appliance, Electrical & Plumbing Repair | Vetrigaram"`.
+  - [x] Local Services: `"AC Repair & Servicing in Chennai | Doorstep Service | Vetrigaram"`.
+  - [x] 404 Page: `"Page Not Found (404) | Vetrigaram Tech Services"`.
 
 - [x] **Unique `<meta name="description">` Tags**
   - [x] Under 160 characters, natural language, action-oriented.
@@ -48,7 +48,7 @@
 
 - [x] **Open Graph Protocol**
   - [x] `og:title`, `og:description`, `og:url`, `og:image`, `og:type="website"`.
-  - [x] `og:site_name="Vetrikharam Home Services"`.
+  - [x] `og:site_name="Vetrigaram Tech Services"`.
   - [x] `og:locale="en_IN"`.
   - [x] Duplicate `og:type` tags in `index.html` removed.
 
@@ -102,8 +102,8 @@
 
 ## 5. Post-Launch Google Search Console Verification
 
-- [ ] **Step 1**: Add property `https://vasanth-software-dev.github.io/vetrikharam_services/` in GSC.
+- [ ] **Step 1**: Add property `https://vasanth-software-dev.github.io/Vetrigaram_services/` in GSC.
 - [ ] **Step 2**: Replace `GSC_VERIFICATION_PLACEHOLDER` in `index.html` with real token (or verify via HTML file / DNS).
-- [ ] **Step 3**: Submit sitemap at `https://vasanth-software-dev.github.io/vetrikharam_services/sitemap.xml`.
+- [ ] **Step 3**: Submit sitemap at `https://vasanth-software-dev.github.io/Vetrigaram_services/sitemap.xml`.
 - [ ] **Step 4**: Run Rich Results Test on `/services/ac-repair` to confirm `Service` and `FAQPage` rich results.
 - [ ] **Step 5**: Run URL Inspection to request initial indexing of the homepage and primary service hubs.

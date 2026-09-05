@@ -19,8 +19,8 @@ export default function ContactPage() {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title="Contact Us & Book a Technician | Vetrikharam Home Services"
-        description="Contact Vetrikharam Home Services in Chennai & Ambattur. Call +91 6374121120 or book online for fast appliance, electrical, and plumbing repair. Open 8 AM - 9 PM daily."
+        title="Contact Us & Book a Technician | Vetrigaram Tech Services"
+        description="Contact Vetrigaram Tech Services in Chennai & Ambattur. Call +91 6374121120 or book online for fast appliance, electrical, and plumbing repair. Open 8 AM - 9 PM daily."
         canonicalPath="/contact"
         schemas={schemas}
       />
@@ -70,7 +70,7 @@ export default function ContactPage() {
               <p className="text-xs text-navy/60 mb-4">Message our customer service desk for instant slot booking.</p>
             </div>
             <a 
-              href={`https://api.whatsapp.com/send?phone=+91${SITE_CONFIG.rawPhone}&text=Hello%20Vetrikharam!%20I%20would%20like%20to%20book%20a%20technician.`}
+              href={`https://api.whatsapp.com/send?phone=+91${SITE_CONFIG.rawPhone}&text=Hello%20Vetrigaram!%20I%20would%20like%20to%20book%20a%20technician.`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#25D366] font-extrabold text-sm hover:underline"

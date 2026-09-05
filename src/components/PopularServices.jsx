@@ -6,8 +6,6 @@ import {
 
 export default function PopularServices({ onBookNow }) {
 
-  
-
   const popularServices = [
     {
       name: "AC Repair",
@@ -16,7 +14,16 @@ export default function PopularServices({ onBookNow }) {
       icon: AirVent,
       category: "appliances",
       fullName: "AC Repair & Servicing",
-      status : true
+      status: true
+    },
+    {
+      name: "AC Installation",
+      desc: "Professional AC installation, mounting, piping, wiring, and testing.",
+      price: "$89",
+      icon: AirVent,
+      category: "appliances",
+      fullName: "AC Installation",
+      status: true
     },
     {
       name: "Refrigerator Repair",
@@ -25,7 +32,7 @@ export default function PopularServices({ onBookNow }) {
       icon: IceCream,
       category: "appliances",
       fullName: "Refrigerator Repair",
-      status : true
+      status: true
     },
     {
       name: "Washing Machine Repair",
@@ -34,7 +41,7 @@ export default function PopularServices({ onBookNow }) {
       icon: WashingMachine,
       category: "appliances",
       fullName: "Washing Machine Repair",
-      status : true
+      status: true
     },
     {
       name: "Geyser Repair",
@@ -43,64 +50,19 @@ export default function PopularServices({ onBookNow }) {
       icon: Flame,
       category: "appliances",
       fullName: "Geyser / Water Heater Repair",
-      status : true
-    },
-    {
-      name: "Electrical Repair",
-      desc: "Fault detection, electrical joints, and lighting fixes.",
-      price: "$39",
-      icon: Zap,
-      category: "electrical",
-      fullName: "Electrical Repair",
-      status : true
+      status: true
     },
     {
       name: "Fan Installation",
-      desc: "Mounting, wiring, speed regulator setup, and alignment checks.",
+      desc: "Ceiling fan mounting, wiring, speed regulator setup, and alignment checks.",
       price: "$39",
       icon: Fan,
-      category: "electrical",
-      fullName: "Fan Installation & Repair",
-      status : true
-    },
-    {
-      name: "Switch & Socket Repair",
-      desc: "Repairing burnt nodes, loose contacts, and socket replacements.",
-      price: "$29",
-      icon: Power,
-      category: "electrical",
-      fullName: "Switch & Socket Repair",
-      status : true
-    },
-    {
-      name: "Plumbing Repair",
-      desc: "General plumbing diagnostic, structural pipe fixes, and minor adjustments.",
-      price: "$39",
-      icon: Wrench,
-      category: "plumbing",
-      fullName: "General Plumbing Repair",
-      status : true
-    },
-    {
-      name: "Tap Leakage Repair",
-      desc: "Drip stops, washer upgrades, and modern tap assembly fitting.",
-      price: "$29",
-      icon: Droplet,
-      category: "plumbing",
-      fullName: "Tap & Faucet Repair",
-      status : true
-    },
-    {
-      name: "Drain Cleaning",
-      desc: "High-pressure clog removal and grease cleaning from household drains.",
-      price: "$39",
-      icon: ShieldAlert,
-      category: "plumbing",
-      fullName: "Drain Cleaning",
-      status : true
+      category: "appliances",
+      fullName: "Fan Installation",
+      status: true
     }
   ];
-  
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

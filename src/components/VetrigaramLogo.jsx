@@ -4,10 +4,10 @@ import React, { useState } from 'react';
  * Modern Corporate 3D Vector Emblem Logo Component
  * Uses /logo.mp4 as the live animated emblem mark, with high-resolution 3D poster fallback.
  */
-export default function VetriKharamLogo({
+export default function VetrigaramLogo({
   size = 'md', // 'sm', 'md', 'lg'
   showText = true,
-  title = 'Vetrikharam',
+  title = 'Vetrigaram',
   subtitle = 'Home Services',
   textLight = false,
   className = '',

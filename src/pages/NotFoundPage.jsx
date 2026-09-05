@@ -8,8 +8,8 @@ export default function NotFoundPage() {
   return (
     <div className="pt-32 pb-24 bg-neutralBg min-h-screen flex items-center justify-center">
       <SeoHead
-        title="Page Not Found (404) | Vetrikharam Home Services"
-        description="The requested page could not be found on Vetrikharam Home Services. Please navigate back to our homepage or explore our services catalog."
+        title="Page Not Found (404) | Vetrigaram Tech Services"
+        description="The requested page could not be found on Vetrigaram Tech Services. Please navigate back to our homepage or explore our services catalog."
         canonicalPath="/404"
         robots="noindex, follow"
       />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Zap, Receipt, Award, Phone, CalendarDays, Star, User, CheckCircle2 } from 'lucide-react';
 import emailjs from "@emailjs/browser";
 import { CONTACT_NUMBER } from '../utils/contacts';
+import { validateName, validatePhone, sanitizeText } from '../utils/security';
 
 const referenceNum = () => Math.floor(100000 + Math.random() * 900000);
 
@@ -39,18 +40,26 @@ export default function Hero({ onBookClick }) {
     const { name, value } = e.target;
     setQuickForm(prev => ({
       ...prev,
-      [name]: name === 'phone' ? value.replace(/[^0-9]/g, '') : value
+      [name]: value
     }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const validateQuick = () => {
-    let tempErrors = {};
-    if (!quickForm.name.trim()) tempErrors.name = "Name is required";
-    if (!quickForm.phone.trim()) {
-      tempErrors.phone = "Phone number is required";
-    } else if (!/^[6-9]\d{9}$/.test(quickForm.phone.trim())) {
-      tempErrors.phone = "Invalid 10-digit number (must start with 6-9)";
+    const tempErrors = {};
+
+    const nameCheck = validateName(quickForm.name, { isRequired: true, maxLength: 70 });
+    if (!nameCheck.isValid) {
+      tempErrors.name = nameCheck.error;
     }
+
+    const phoneCheck = validatePhone(quickForm.phone, { isRequired: true, allowInternational: false });
+    if (!phoneCheck.isValid) {
+      tempErrors.phone = phoneCheck.error;
+    }
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -58,27 +67,19 @@ export default function Hero({ onBookClick }) {
   const handleQuickSubmit = async (e) => {
     e.preventDefault();
     if (!validateQuick()) return;
+    if (isSubmitting) return;
 
     setIsSubmitting(true);
     try {
-      // const result = await createBooking({
-      //   name: quickForm.name,
-      //   phone: quickForm.phone,
-      //   problem_description: "Quick Booking Request from Hero Banner"
-      // });
+      const reference_num = "FX-" + referenceNum();
 
-      // const templateParams = {
-      //   name: quickForm.name,
-      //   phone:quickForm.phone,
-      //   problem_description: "Quick Booking Request from Hero Banner"
-      // };
-
-      const reference_num = "FX-"+referenceNum();
+      const cleanName = validateName(quickForm.name).sanitized || sanitizeText(quickForm.name);
+      const cleanPhone = validatePhone(quickForm.phone).sanitized || sanitizeText(quickForm.phone);
 
       const templateParams = {
-        reference_num: reference_num,
-        name: quickForm.name,
-        phone: quickForm.phone,
+        reference_num,
+        name: cleanName,
+        phone: cleanPhone,
         problem_description: "Quick Booking Request from Hero Banner",
         request_received_on: new Date().toLocaleString("en-IN", {
           timeZone: "Asia/Kolkata",
@@ -86,26 +87,18 @@ export default function Hero({ onBookClick }) {
       };
 
       await emailjs.send(
-            "service_0j3nlam",
-            "template_fhth66j",
-            templateParams,
-            "7fEFpmWyNsuPUUzKF"
+        "service_0j3nlam",
+        "template_fhth66j",
+        templateParams,
+        "7fEFpmWyNsuPUUzKF"
       );
 
       setBookingRef(reference_num);
       setIsSubmitted(true);
       setErrors({});
     } catch (err) {
-      if (err.status === 400 && Array.isArray(err.errors)) {
-        const apiErrors = {};
-        err.errors.forEach((e) => {
-          apiErrors[e.field] = e.message;
-        });
-        setErrors(apiErrors);
-      } else {
-        setErrors({ phone: "Booking failed. Please try again." });
-      }
-      console.log(err);
+      console.error("Hero quick booking error:", err);
+      setErrors({ phone: "Booking request failed. Please try again or call directly." });
     } finally {
       setIsSubmitting(false);
     }
@@ -241,11 +234,15 @@ export default function Hero({ onBookClick }) {
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400" />
                       <input
+                        id="hero-quick-name"
                         type="text"
                         name="name"
+                        maxLength={70}
+                        autoComplete="name"
                         value={quickForm.name}
                         onChange={handleQuickChange}
                         placeholder="Name"
+                        aria-label="Full Name"
                         className={`w-full bg-white pl-11 pr-4 py-3.5 rounded-xl border ${errors.name ? 'border-red-500 bg-red-50/20' : 'border-gray-250'} font-medium text-navy text-sm`}
                       />
                     </div>
@@ -257,11 +254,15 @@ export default function Hero({ onBookClick }) {
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-400" />
                       <input
+                        id="hero-quick-phone"
                         type="tel"
                         name="phone"
+                        maxLength={15}
+                        autoComplete="tel"
                         value={quickForm.phone}
                         onChange={handleQuickChange}
-                        placeholder="Mobile No."
+                        placeholder="Mobile No. (e.g. 6374121120)"
+                        aria-label="Mobile Number"
                         className={`w-full bg-white pl-11 pr-4 py-3.5 rounded-xl border ${errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-250'} font-medium text-navy text-sm`}
                       />
                     </div>
@@ -272,8 +273,7 @@ export default function Hero({ onBookClick }) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    // className="w-full bg-[#80B93C] hover:bg-[#72A634] disabled:bg-[#80B93C]/70 text-white font-extrabold py-3.5 rounded-xl transition-all duration-200 text-base active:scale-[0.98] shadow-button-blue"
-                    className='w-full bg-primary hover:bg-primary-dark text-white font-extrabold py-3.5 rounded-xl transition-all duration-200 text-base active:scale-[0.98] shadow-button-blue'
+                    className="w-full bg-primary hover:bg-primary-dark disabled:bg-primary/60 text-white font-extrabold py-3.5 rounded-xl transition-all duration-200 text-base active:scale-[0.98] shadow-button-blue"
                   >
                     {isSubmitting ? 'Booking...' : 'Book Now'}
                   </button>

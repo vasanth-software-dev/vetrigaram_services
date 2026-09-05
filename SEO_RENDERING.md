@@ -1,7 +1,7 @@
 # Enterprise SEO Architecture: Rendering & Indexation Strategy
 
-**Repository**: `vasanth-software-dev/vetrikharam_services`  
-**Deployment Platform**: GitHub Pages (`https://vasanth-software-dev.github.io/vetrikharam_services/`)  
+**Repository**: `vasanth-software-dev/Vetrigaram_services`  
+**Deployment Platform**: GitHub Pages (`https://vasanth-software-dev.github.io/Vetrigaram_services/`)  
 **Stack**: React 19 + Vite 8 + Tailwind CSS 3  
 **Status**: Production Standard Implemented  
 
@@ -13,13 +13,13 @@ Prior to this upgrade, the application was a purely client-side rendered (CSR) S
 
 ```html
 <div id="root"></div>
-<script type="module" src="/vetrikharam_services/assets/index-....js"></script>
+<script type="module" src="/Vetrigaram_services/assets/index-....js"></script>
 ```
 
 ### The Inherent Vulnerabilities of Pure CSR on GitHub Pages:
 1. **The Social Preview Blind Spot**: Social platforms (WhatsApp, Facebook Open Graph scraper, Twitter/X Card validator, LinkedIn bot, Telegram) do **not** run a headless browser or execute JavaScript. When a user shared a link to an individual service (e.g. `/services/ac-repair`), the preview scraper received either an empty page or fallback generic metadata.
 2. **Search Engine Render Budget Delays**: While Googlebot does render JavaScript, it operates on a two-wave indexing model. Rendering JavaScript is computationally expensive; pages waiting for rendering are queued, delaying indexing for days or weeks. Other search engines (Bing, DuckDuckGo, Yahoo, Yandex, Baidu) have even more constrained JS rendering capabilities.
-3. **The GitHub Pages Deep-Linking 404 Problem**: GitHub Pages is a static file server. In a standard SPA, requesting `https://vasanth-software-dev.github.io/vetrikharam_services/services/ac-repair` returns a hard `404 Not Found` because no file exists at `/services/ac-repair/index.html`.
+3. **The GitHub Pages Deep-Linking 404 Problem**: GitHub Pages is a static file server. In a standard SPA, requesting `https://vasanth-software-dev.github.io/Vetrigaram_services/services/ac-repair` returns a hard `404 Not Found` because no file exists at `/services/ac-repair/index.html`.
 
 ---
 
@@ -102,4 +102,4 @@ npm run build
 # 2. Preview the built static directory locally
 npm run preview
 ```
-Visit `http://localhost:4173/vetrikharam_services/services/ac-repair` directly in your browser. Inspect page source (`Ctrl+U`) to confirm that all title tags, meta descriptions, canonical links, and Schema.org JSON-LD are pre-rendered into the raw HTML.
+Visit `http://localhost:4173/Vetrigaram_services/services/ac-repair` directly in your browser. Inspect page source (`Ctrl+U`) to confirm that all title tags, meta descriptions, canonical links, and Schema.org JSON-LD are pre-rendered into the raw HTML.

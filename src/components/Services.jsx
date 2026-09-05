@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { 
   Tv, AirVent, IceCream, WashingMachine, Flame, 
   Lightbulb, Zap, Wrench, Shield, ArrowRight,
-  Droplet, Hammer, Power, HelpCircle, Check
+  Droplet, Hammer, Power, HelpCircle, Check, Droplets, BatteryCharging 
 } from 'lucide-react';
 
 export const servicesData = {
+
   appliances: {
     title: "Appliance Repair",
     description: "Keep your essential home appliances running at peak efficiency with expert diagnostics.",
@@ -34,6 +35,18 @@ export const servicesData = {
         desc: "Heating element replacement, thermostat adjustment, leak repair.",
         price: "$49",
         icon: Flame
+      },
+      {
+        name: "RO Water Purifier Repair",
+        desc: "Filter replacement, membrane servicing, leakage repair, and water quality check.",
+        price: "$39",
+        icon: Droplets
+      },
+      {
+        name: "Inverter Repair & Servicing",
+        desc: "Battery check, wiring inspection, fault diagnosis, and backup performance testing.",
+        price: "$49",
+        icon: BatteryCharging
       }
     ]
   },
@@ -149,16 +162,16 @@ export default function Services({ onBookNow }) {
   const categories = [
     { id: 'all', label: 'All Services' },
     { id: 'appliances', label: 'Appliance Repair' },
-    { id: 'electrical', label: 'Electrical Services' },
-    { id: 'plumbing', label: 'Plumbing Services' }
+    // { id: 'electrical', label: 'Electrical Services' },
+    // { id: 'plumbing', label: 'Plumbing Services' }
   ];
 
   const getFilteredItems = () => {
     if (activeTab === 'all') {
       return [
         ...servicesData.appliances.items.map(item => ({ ...item, category: 'appliances', catTitle: 'Appliance Repair' })),
-        ...servicesData.electrical.items.map(item => ({ ...item, category: 'electrical', catTitle: 'Electrical Services' })),
-        ...servicesData.plumbing.items.map(item => ({ ...item, category: 'plumbing', catTitle: 'Plumbing Services' }))
+        // ...servicesData.electrical.items.map(item => ({ ...item, category: 'electrical', catTitle: 'Electrical Services' })),
+        // ...servicesData.plumbing.items.map(item => ({ ...item, category: 'plumbing', catTitle: 'Plumbing Services' }))
       ];
     }
     return servicesData[activeTab].items.map(item => ({ 

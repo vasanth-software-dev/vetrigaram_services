@@ -19,8 +19,8 @@ export default function AboutPage() {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title="About Us | Verified Doorstep Home Technicians | Vetrikharam"
-        description="Learn about Vetrikharam Home Services. Our mission is delivering reliable, verified, and warranty-backed appliance, electrical, and plumbing repair across Chennai."
+        title="About Us | Verified Doorstep Home Technicians | Vetrigaram"
+        description="Learn about Vetrigaram Tech Services. Our mission is delivering reliable, verified, and warranty-backed appliance, electrical, and plumbing repair across Chennai."
         canonicalPath="/about"
         schemas={schemas}
       />
@@ -35,11 +35,11 @@ export default function AboutPage() {
           </span>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy tracking-tight leading-tight">
-            About Vetrikharam Home Services
+            About Vetrigaram Tech Services
           </h1>
 
           <p className="text-navy/70 text-base sm:text-lg mt-4 leading-relaxed">
-            Founded to eliminate the uncertainty, inflated pricing, and inconsistent craftsmanship typical of traditional informal home repairs, Vetrikharam provides structured, certified, and transparent doorstep home services across Chennai and Ambattur.
+            Founded to eliminate the uncertainty, inflated pricing, and inconsistent craftsmanship typical of traditional informal home repairs, Vetrigaram provides structured, certified, and transparent doorstep home services across Chennai and Ambattur.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10 pt-8 border-t border-gray-100">
@@ -83,7 +83,7 @@ export default function AboutPage() {
 
           <div className="space-y-6 text-sm sm:text-base text-navy/75 leading-relaxed">
             <p>
-              At Vetrikharam, we understand that inviting a technician into your home requires complete trust. That is why every technician in our network undergoes rigorous identity verification, criminal record screening, and hands-on diagnostic competence testing.
+              At Vetrigaram, we understand that inviting a technician into your home requires complete trust. That is why every technician in our network undergoes rigorous identity verification, criminal record screening, and hands-on diagnostic competence testing.
             </p>
             <p>
               We operate on an upfront, transparent pricing model. Before any tool touches your appliance or electrical wiring, you receive a detailed, itemized estimate. There are no surprise fees or undisclosed charges.

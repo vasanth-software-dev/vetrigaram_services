@@ -27,7 +27,7 @@ export default function CTA({ onBookClick }) {
 
         {/* Supporting text */}
         <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-10">
-          From complex appliance troubleshooting to immediate electrical repairs and plumbing emergencies, vetikharam's verified local technicians are ready to help.
+          From complex appliance troubleshooting to urgent appliance repairs, Vetikharam’s verified local technicians are ready to help.
         </p>
 
         {/* Buttons */}

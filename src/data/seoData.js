@@ -1,19 +1,19 @@
 /**
- * Centralized Enterprise SEO Data Registry for Vetrikharam Home Services
+ * Centralized Enterprise SEO Data Registry for Vetrigaram Tech Services
  * Single source of truth for business metadata, routes, services, locations, and schemas.
  */
 
 export const SITE_CONFIG = {
-  brandName: "Vetrikharam Home Services",
-  shortName: "Vetrikharam",
-  legalName: "Vetrikharam Home Services Private Limited",
+  brandName: "Vetrigaram Tech Services",
+  shortName: "Vetrigaram",
+  legalName: "Vetrigaram Tech Services Private Limited",
   domain: "vasanth-software-dev.github.io",
-  basePath: "/vetrikharam_services",
-  siteUrl: "https://vasanth-software-dev.github.io/vetrikharam_services",
+  basePath: "/Vetrigaram_services",
+  siteUrl: "https://vasanth-software-dev.github.io/Vetrigaram_services",
   phone: "+91-6374121120",
   rawPhone: "6374121120",
   email: "support@vetikharam.com",
-  defaultOgImage: "https://vasanth-software-dev.github.io/vetrikharam_services/logo-emblem.png",
+  defaultOgImage: "https://vasanth-software-dev.github.io/Vetrigaram_services/logo-emblem.png",
   locale: "en_IN",
   address: {
     streetAddress: "Ambattur Industrial Estate",
@@ -36,10 +36,10 @@ export const SITE_CONFIG = {
     { name: "Vasanth", role: "Master Plumber & Systems Engineer", phone: "6380282430" },
   ],
   socialLinks: {
-    facebook: "https://facebook.com/vetrikharamservices",
-    twitter: "https://twitter.com/vetrikharam",
-    instagram: "https://instagram.com/vetrikharamservices",
-    linkedin: "https://linkedin.com/company/vetrikharam-services",
+    facebook: "https://facebook.com/Vetrigaramservices",
+    twitter: "https://twitter.com/Vetrigaram",
+    instagram: "https://instagram.com/Vetrigaramservices",
+    linkedin: "https://linkedin.com/company/Vetrigaram-services",
   }
 };
 
@@ -202,285 +202,6 @@ export const SERVICES_CATALOG = [
       }
     ]
   },
-
-  // Electrical
-  {
-    id: "electrical-repair",
-    category: "electrical",
-    categoryTitle: "Electrical Services",
-    name: "Electrical Repair & Diagnostics",
-    shortName: "Electrical Repair",
-    tagline: "Safe, certified diagnostic and repair services for household electrical failures.",
-    desc: "Licensed electrical technicians for short circuit tracing, distribution board rewiring, earthing testing, circuit overload fixes, and household power troubleshooting.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Frequent circuit breaker trips or blown fuses",
-      "Flickering lights or intermittent power drops",
-      "Sparks, burning smell, or warm switchboards",
-      "Mild shock from appliances or metal fixtures",
-      "Total power outage in specific rooms"
-    ],
-    benefits: [
-      "Government-licensed wiremen and electricians",
-      "Use of fire-retardant FRLS copper wires and ISI modular switches",
-      "Digital insulation resistance and earth pit testing",
-      "Upfront pricing with transparent inspection policy"
-    ],
-    process: [
-      { step: "01", title: "Load & Continuity Test", desc: "Map active circuits and locate points of high resistance." },
-      { step: "02", title: "Short Circuit Tracing", desc: "Trace faulty conduits and junction boxes." },
-      { step: "03", title: "Rewiring / Component Fix", desc: "Replace burnt connectors, MCBs, or wiring." },
-      { step: "04", title: "Earthing Safety Check", desc: "Verify voltage differential between neutral and ground." }
-    ],
-    faqs: [
-      {
-        q: "How quickly do you handle electrical emergencies in Chennai?",
-        a: "Emergency electrical calls receive priority routing with technicians dispatched within 30 to 60 minutes for serious hazards like sparking boards or smoke."
-      }
-    ]
-  },
-  {
-    id: "switch-socket-repair",
-    category: "electrical",
-    categoryTitle: "Electrical Services",
-    name: "Switch & Socket Repair",
-    shortName: "Switch & Socket",
-    tagline: "Replacement of burnt nodes, loose modular switches, power sockets, and faceplates.",
-    desc: "Professional installation and replacement of standard, 16A heavy-appliance sockets, modular switches, dimmer controls, and USB charging points.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Loose plugs sparking inside sockets",
-      "Blackened or melted plastic around switch faces",
-      "Switches that feel stiff, jammed, or unresponsive",
-      "Heavy appliances causing switches to overheat"
-    ],
-    benefits: [
-      "High-grade polycarbonate heat-resistant modular fittings",
-      "Correct wire gauge matching for 16A AC/geyser loads",
-      "Clean finishing without wall damage"
-    ],
-    process: [
-      { step: "01", title: "Mains Isolation", desc: "Safely isolate circuit breaker before opening wall box." },
-      { step: "02", title: "Terminal Inspection", desc: "Trim oxidised wire ends and check gauge suitability." },
-      { step: "03", title: "Modular Fitting", desc: "Install new switch mechanism and screw tight." },
-      { step: "04", title: "Load Test", desc: "Power up and test socket with full load." }
-    ],
-    faqs: [
-      {
-        q: "Can you upgrade my old non-modular switches to modern modular plates?",
-        a: "Yes, our electricians can retro-fit modular gang boxes or install modern faceplates to blend seamlessly with your interior."
-      }
-    ]
-  },
-  {
-    id: "fan-installation",
-    category: "electrical",
-    categoryTitle: "Electrical Services",
-    name: "Fan Installation & Repair",
-    shortName: "Fan Installation",
-    tagline: "Ceiling fan mounting, BLDC fan setup, capacitor fixes, and regulator replacements.",
-    desc: "Secure mounting and wiring for ceiling fans, exhaust fans, wall mount fans, and smart BLDC energy-saving fans. We eliminate wobbling and bearing screeching.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Fan running too slow even at speed 5",
-      "Annoying squeaking or grinding bearing noise",
-      "Fan wobbling dangerously during operation",
-      "Remote control not responding on BLDC fan"
-    ],
-    benefits: [
-      "High-tensile anchor fastener mounting for 100% safety",
-      "Capacitor testing and replacement with high microfarad ratings",
-      "Speed regulator calibration without heating"
-    ],
-    process: [
-      { step: "01", title: "Ceiling Hook Check", desc: "Inspect hook weight rating and vibration absorption." },
-      { step: "02", title: "Downrod Assembly", desc: "Assemble canopy, safety pin, and blade alignments." },
-      { step: "03", title: "Wiring & Earthing", desc: "Connect phase, neutral, and earth cables firmly." },
-      { step: "04", title: "Dynamic Balancing", desc: "Test at full speed to ensure zero wobble." }
-    ],
-    faqs: [
-      {
-        q: "Do you install modern BLDC energy-saving fans?",
-        a: "Yes, we install and configure all BLDC fan brands (Atomberg, Havells, Crompton, Orient) including pairing their RF remotes."
-      }
-    ]
-  },
-  {
-    id: "wiring-rewiring",
-    category: "electrical",
-    categoryTitle: "Electrical Services",
-    name: "Wiring & Rewiring Services",
-    shortName: "Home Wiring",
-    tagline: "Concealed conduit wiring, house rewiring, sub-meter setup, and safety upgrades.",
-    desc: "Complete residential wiring and rewiring services for new renovations, kitchen heavy-load lines, home offices, inverter line separation, and safety overhauls.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Old aluminum or cracked rubber wiring",
-      "Frequent wire burns inside conduits",
-      "Adding high-tonnage ACs without dedicated cabling",
-      "Inverter line not separated from heavy appliances"
-    ],
-    benefits: [
-      "ISI-certified copper wires with zero smoke halogen retardance",
-      "Proper phase-balancing across 3-phase domestic meters",
-      "Dedicated earthing line drawn to every socket"
-    ],
-    process: [
-      { step: "01", title: "Load Calculation", desc: "Compute total wattage demand room by room." },
-      { step: "02", title: "Conduit Pulling", desc: "Pull color-coded cables through PVC conduits." },
-      { step: "03", title: "MCB Box Termination", desc: "Connect circuits to correctly rated miniature circuit breakers." },
-      { step: "04", title: "Mega-Ohm Test", desc: "Validate insulation resistance with high voltage tester." }
-    ],
-    faqs: [
-      {
-        q: "How long does full house rewiring take?",
-        a: "An average 2-3 BHK apartment typically requires 2 to 4 working days, planned room by room to minimize household disruption."
-      }
-    ]
-  },
-
-  // Plumbing
-  {
-    id: "plumbing-repair",
-    category: "plumbing",
-    categoryTitle: "Plumbing Services",
-    name: "General Plumbing Repair",
-    shortName: "Plumbing Repair",
-    tagline: "Fast, hygienic pipe repair, water pressure fixes, and plumbing troubleshooting.",
-    desc: "Experienced plumbers for residential pipe repairs, damp wall leak detection, pressure pump setup, overhead tank piping, and valve replacements.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Low water pressure across taps and showers",
-      "Damp patches or peeling paint on walls due to pipe leaks",
-      "Noisy pipes when taps are shut off (water hammer)",
-      "Motor pump not pushing water to overhead tank"
-    ],
-    benefits: [
-      "Acoustic and thermal dampness leak detection",
-      "CPVC, UPVC, and PPR solvent weld mastery",
-      "Clean, hygienic workmanship with shoe covers and floor protectors",
-      "Zero hidden material markups"
-    ],
-    process: [
-      { step: "01", title: "Pressure & Flow Check", desc: "Trace pipeline runs from overhead tank to fixture." },
-      { step: "02", title: "Leak Isolation", desc: "Identify exact pinhole or damaged union fitting." },
-      { step: "03", title: "Segment Replacement", desc: "Cut and solvent-weld high-grade pressure pipes." },
-      { step: "04", title: "Water Quality Test", desc: "Flush lines and verify full flow rate." }
-    ],
-    faqs: [
-      {
-        q: "Can you fix dampness inside bedroom walls caused by bathroom plumbing?",
-        a: "Yes, our plumbers pinpoint the concealed pipe joint failure and repair it with minimal plaster cutting, stopping water seepage at the source."
-      }
-    ]
-  },
-  {
-    id: "tap-faucet-repair",
-    category: "plumbing",
-    categoryTitle: "Plumbing Services",
-    name: "Tap & Faucet Repair",
-    shortName: "Tap Repair",
-    tagline: "Drip stops, ceramic spindle replacements, mixer fixes, and new tap fittings.",
-    desc: "Rapid repair for leaking kitchen faucets, quarter-turn taps, bib taps, concealed diverters, and sensor taps across luxury and standard fittings.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Constant dripping water keeping you awake",
-      "Tap handle spinning freely without shutting off water",
-      "Low stream of water due to hard water aerator scaling",
-      "Water leaking from base of faucet under the sink"
-    ],
-    benefits: [
-      "Original brass and ceramic disc cartridges",
-      "Teflon sealing and precision threading",
-      "Aerator descaling to restore powerful flow"
-    ],
-    process: [
-      { step: "01", title: "Inlet Isolation", desc: "Shut local angle stop cock." },
-      { step: "02", title: "Spindle Removal", desc: "Unscrew head and extract worn cartridge." },
-      { step: "03", title: "Washer/Spindle Fit", desc: "Install ceramic disc unit and lubricate threads." },
-      { step: "04", title: "Seal Test", desc: "Turn on high pressure and inspect for micro-droplets." }
-    ],
-    faqs: [
-      {
-        q: "Do you supply the spare spindles or should I purchase them?",
-        a: "Our technicians carry standard brass spindles, washers, and Teflon tapes. If you have designer fittings (Jaguar, Kohler, Grohe), we procure matching parts or install fixtures supplied by you."
-      }
-    ]
-  },
-  {
-    id: "drain-cleaning",
-    category: "plumbing",
-    categoryTitle: "Plumbing Services",
-    name: "Drain Cleaning & Clog Removal",
-    shortName: "Drain Cleaning",
-    tagline: "High-pressure clog clearance from kitchen sinks, bathroom traps, and sewer lines.",
-    desc: "Fast, mess-free unblocking of slow drains, gully traps, floor nahani traps, and toilet waste pipes using mechanical drain snakes and chemical-free jetting.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Water backing up into kitchen sink or shower floor",
-      "Foul sewage odor rising through drain gratings",
-      "Gurgling sounds when other fixtures drain",
-      "Water draining agonizingly slow"
-    ],
-    benefits: [
-      "Heavy-duty mechanical rotary drain augers",
-      "Zero corrosive acid use that ruins PVC pipes",
-      "Full sanitization of drainage area post-unblocking"
-    ],
-    process: [
-      { step: "01", title: "Blockage Identification", desc: "Locate obstruction in p-trap or main branch." },
-      { step: "02", title: "Mechanical Clearance", desc: "Feed rotary spiral cable to dislodge hair, grease, or debris." },
-      { step: "03", title: "High-Volume Flush", desc: "Flush system with hot water and biological cleaner." },
-      { step: "04", title: "Grate Reinstallation", desc: "Reseat trap grating to prevent cockroach entry." }
-    ],
-    faqs: [
-      {
-        q: "Do you use harsh acid to clear clogs?",
-        a: "No! Acids damage your PVC pipes and melt joint solvent, causing wall leaks later. We rely on mechanical steel snake augers that clear clogs safely and permanently."
-      }
-    ]
-  },
-  {
-    id: "water-tank-services",
-    category: "plumbing",
-    categoryTitle: "Plumbing Services",
-    name: "Water Tank Cleaning & Float Repair",
-    shortName: "Water Tank Service",
-    tagline: "Overhead tank cleaning, automatic float switch installation, and inlet repair.",
-    desc: "Hygienic deep cleaning and sediment evacuation for overhead Sintex tanks and underground sumps. We also repair overflow pipes and ball valves.",
-    startingPrice: "₹149 Inspection",
-    warranty: "30-Day Service Warranty",
-    symptoms: [
-      "Water tank overflowing continuously onto terrace",
-      "Muddy or sediment-heavy water in bathroom taps",
-      "Float valve stuck open or ball disconnected",
-      "Algae or sludge formation inside storage tank"
-    ],
-    benefits: [
-      "Pressure washer sludge removal and UV/chlorine sanitization",
-      "Heavy-duty brass and PVC float valve replacements",
-      "Automatic motor controller wiring setup"
-    ],
-    process: [
-      { step: "01", title: "Dewatering", desc: "Pump out stagnant water and bottom silt." },
-      { step: "02", title: "Scrubbing", desc: "High-pressure scrub of walls and floor." },
-      { step: "03", title: "Sanitizing", desc: "Food-grade antibacterial treatment." },
-      { step: "04", title: "Float Valve Calibration", desc: "Adjust float shutoff level to prevent overflow." }
-    ],
-    faqs: [
-      {
-        q: "How often should household water tanks be cleaned in Chennai?",
-        a: "We recommend cleaning your overhead tank every 6 months to prevent hard water mineral scaling, algae growth, and bacterial contamination."
-      }
-    ]
-  }
 ];
 
 export const LOCATIONS_CATALOG = [
@@ -490,10 +211,10 @@ export const LOCATIONS_CATALOG = [
     state: "Tamil Nadu",
     postalCode: "600001",
     heroTitle: "Expert Doorstep Home Services in Chennai",
-    metaTitle: "Home Services in Chennai | Appliance, Electrical & Plumbing Repair | Vetrikharam",
+    metaTitle: "Home Services in Chennai | Appliance, Electrical & Plumbing Repair | Vetrigaram",
     metaDescription: "Verified doorstep appliance repair, electrical troubleshooting, and plumbing services across Chennai. Same-day service with ₹149 inspection charge and 30-day warranty.",
     headline: "Doorstep Appliance, Electrical & Plumbing Services Across Chennai",
-    overview: "Vetrikharam Home Services is proud to deliver reliable, fast, and certified doorstep repair services to households and apartments throughout Chennai. From troubleshooting non-cooling ACs during humid summers to emergency short-circuit resolution, our certified local technicians arrive fully equipped at your doorstep.",
+    overview: "Vetrigaram Tech Services is proud to deliver reliable, fast, and certified doorstep repair services to households and apartments throughout Chennai. From troubleshooting non-cooling ACs during humid summers to emergency short-circuit resolution, our certified local technicians arrive fully equipped at your doorstep.",
     keyLocalities: [
       "Ambattur", "Anna Nagar", "T. Nagar", "Velachery", "Adyar", 
       "Mylapore", "Tambaram", "Guindy", "Porur", "Kilpauk", 
@@ -525,10 +246,10 @@ export const LOCATIONS_CATALOG = [
     state: "Tamil Nadu",
     postalCode: "600053",
     heroTitle: "Trusted Home Services in Ambattur, Chennai",
-    metaTitle: "Home Services in Ambattur | AC, Electrical & Plumbing Repair | Vetrikharam",
+    metaTitle: "Home Services in Ambattur | AC, Electrical & Plumbing Repair | Vetrigaram",
     metaDescription: "Doorstep home repairs in Ambattur, Chennai. Certified technicians for AC servicing, refrigerator repair, electrical faults, and plumbing clogs with 30-day warranty.",
     headline: "Immediate Doorstep Repairs for Ambattur Residents & Housing Estates",
-    overview: "Located right in our home corridor, Vetrikharam provides priority doorstep technician coverage for Ambattur OT, Ambattur Industrial Estate residential quarters, Mogappair, and surrounding areas. Our local technicians are stationed nearby for rapid turnaround.",
+    overview: "Located right in our home corridor, Vetrigaram provides priority doorstep technician coverage for Ambattur OT, Ambattur Industrial Estate residential quarters, Mogappair, and surrounding areas. Our local technicians are stationed nearby for rapid turnaround.",
     keyLocalities: [
       "Ambattur Old Town (OT)", "Ambattur Industrial Estate Residential", 
       "Mogappair East & West", "Padi", "Mannurpet", 
@@ -545,7 +266,7 @@ export const LOCATIONS_CATALOG = [
     ],
     faqs: [
       {
-        q: "Why choose Vetrikharam for home repairs in Ambattur?",
+        q: "Why choose Vetrigaram for home repairs in Ambattur?",
         a: "Because our primary operations base is in Ambattur, our local technicians can arrive within 60 to 90 minutes with zero travel delays, backed by genuine parts and a 30-day warranty."
       },
       {
@@ -568,18 +289,18 @@ export function getLocationBySlug(slug) {
 
 // All supported indexable routes for sitemap and prerendering
 export const ALL_CANONICAL_ROUTES = [
-  { path: "/", changefreq: "weekly", priority: "1.0", title: "Vetrikharam Home Services | Premium Appliance, Electrical & Plumbing Repair" },
-  { path: "/services", changefreq: "weekly", priority: "0.9", title: "All Home Services & Doorstep Repairs | Vetrikharam" },
-  { path: "/locations", changefreq: "monthly", priority: "0.8", title: "Service Coverage Areas & Local Hubs | Vetrikharam" },
-  { path: "/about", changefreq: "monthly", priority: "0.7", title: "About Vetrikharam | Trusted Doorstep Home Repairs" },
-  { path: "/contact", changefreq: "monthly", priority: "0.8", title: "Contact Us & Book a Technician | Vetrikharam" },
+  { path: "/", changefreq: "weekly", priority: "1.0", title: "Vetrigaram Tech Services | Premium Appliance, Electrical & Plumbing Repair" },
+  { path: "/services", changefreq: "weekly", priority: "0.9", title: "All Home Services & Doorstep Repairs | Vetrigaram" },
+  { path: "/locations", changefreq: "monthly", priority: "0.8", title: "Service Coverage Areas & Local Hubs | Vetrigaram" },
+  { path: "/about", changefreq: "monthly", priority: "0.7", title: "About Vetrigaram | Trusted Doorstep Home Repairs" },
+  { path: "/contact", changefreq: "monthly", priority: "0.8", title: "Contact Us & Book a Technician | Vetrigaram" },
 
   // Service pages
   ...SERVICES_CATALOG.map(s => ({
     path: `/services/${s.id}`,
     changefreq: "weekly",
     priority: "0.85",
-    title: `${s.name} | Doorstep Repair & Servicing | Vetrikharam`
+    title: `${s.name} | Doorstep Repair & Servicing | Vetrigaram`
   })),
 
   // Location pages
@@ -598,7 +319,7 @@ export const ALL_CANONICAL_ROUTES = [
         path: `/${l.id}/${serviceId}`,
         changefreq: "weekly",
         priority: "0.9",
-        title: `${s ? s.shortName : "Home Repair"} in ${l.name} | Doorstep Technician | Vetrikharam`
+        title: `${s ? s.shortName : "Home Repair"} in ${l.name} | Doorstep Technician | Vetrigaram`
       };
     })
   )

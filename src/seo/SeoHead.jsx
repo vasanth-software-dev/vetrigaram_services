@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { SITE_CONFIG } from '../data/seoData';
+import { escapeJsonForScript, sanitizeText } from '../utils/security';
 
 /**
  * Reusable Enterprise SEO Component
@@ -19,10 +20,11 @@ export default function SeoHead({
     ? (title.includes(SITE_CONFIG.shortName) ? title : `${title} | ${SITE_CONFIG.brandName}`)
     : `${SITE_CONFIG.brandName} | Premium Appliance, Electrical & Plumbing Repair`;
 
-  const metaDesc = description || "Vetrikharam Home Services delivers fast, reliable, and professional appliance repair, electrical troubleshooting, and plumbing services from verified technicians at transparent prices.";
+  const metaDesc = description || "Vetrigaram Tech Services delivers fast, reliable, and professional appliance repair, electrical troubleshooting, and plumbing services from verified technicians at transparent prices.";
 
-  // Normalize canonical URL
-  const cleanPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+  // Normalize and sanitize canonical URL path
+  const sanitizedPath = sanitizeText(canonicalPath, { allowNewlines: false, maxLength: 200 }).replace(/^[/\\]+/, '/');
+  const cleanPath = sanitizedPath.startsWith('/') ? sanitizedPath : `/${sanitizedPath}`;
   const canonicalUrl = `${SITE_CONFIG.siteUrl}${cleanPath === '/' ? '/' : cleanPath}`;
 
   useEffect(() => {
@@ -80,9 +82,10 @@ export default function SeoHead({
         const script = document.createElement('script');
         script.id = 'dynamic-jsonld-schema';
         script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(
+        const rawJson = JSON.stringify(
           validSchemas.length === 1 ? validSchemas[0] : { "@context": "https://schema.org", "@graph": validSchemas }
         );
+        script.textContent = escapeJsonForScript(rawJson);
         document.head.appendChild(script);
       }
     }
@@ -118,8 +121,10 @@ export default function SeoHead({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              validSchemas.length === 1 ? validSchemas[0] : { "@context": "https://schema.org", "@graph": validSchemas }
+            __html: escapeJsonForScript(
+              JSON.stringify(
+                validSchemas.length === 1 ? validSchemas[0] : { "@context": "https://schema.org", "@graph": validSchemas }
+              )
             )
           }}
         />

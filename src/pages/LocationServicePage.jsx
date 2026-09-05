@@ -9,12 +9,20 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import BookingForm from '../components/BookingForm';
 import { getServiceBySlug, getLocationBySlug, SERVICES_CATALOG, SITE_CONFIG } from '../data/seoData';
 import { getServiceSchema, getLocalBusinessSchema, getBreadcrumbSchema, getFaqSchema } from '../seo/schemaGenerator';
+import { validateSlug } from '../utils/security';
 
 export default function LocationServicePage() {
   const { locationSlug, serviceSlug } = useParams();
-  const location = getLocationBySlug(locationSlug);
-  const service = getServiceBySlug(serviceSlug);
   const [activeFaq, setActiveFaq] = useState(null);
+  const locCheck = validateSlug(locationSlug);
+  const srvCheck = validateSlug(serviceSlug);
+
+  if (!locCheck.isValid || !srvCheck.isValid) {
+    return <Navigate to="/services" replace />;
+  }
+
+  const location = getLocationBySlug(locCheck.sanitized);
+  const service = getServiceBySlug(srvCheck.sanitized);
 
   if (!location || !service) {
     return <Navigate to="/services" replace />;
@@ -61,7 +69,7 @@ export default function LocationServicePage() {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title={`${service.name} in ${location.name} | Doorstep Service | Vetrikharam`}
+        title={`${service.name} in ${location.name} | Doorstep Service | Vetrigaram`}
         description={`Professional ${service.name.toLowerCase()} in ${location.name}. Fast doorstep technician dispatch across ${location.keyLocalities.slice(0, 4).join(', ')}. Flat ₹149 inspection with 30-day warranty.`}
         canonicalPath={`/${location.id}/${service.id}`}
         schemas={schemas}
@@ -176,7 +184,7 @@ export default function LocationServicePage() {
         {/* Service Diagnostic & Benefits */}
         <section className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-premium mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-navy font-poppins mb-6">
-            Why Homeowners in {location.name} Choose Vetrikharam
+            Why Homeowners in {location.name} Choose Vetrigaram
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -33,18 +33,18 @@ export default function ServicesPage({ onBookNow }) {
       description: 'Keep your cooling and washing essentials operating at peak capacity with certified doorstep mechanics.',
       services: SERVICES_CATALOG.filter(s => s.category === 'appliances')
     },
-    {
-      id: 'electrical',
-      title: 'Electrical Diagnostics & Wiring',
-      description: 'Safe, certified solutions for short circuits, tripped breakers, and high-load household installations.',
-      services: SERVICES_CATALOG.filter(s => s.category === 'electrical')
-    },
-    {
-      id: 'plumbing',
-      title: 'Plumbing & Drainage Solutions',
-      description: 'Hygienic tap, concealed leak, pressure pump, and drain block repairs by experienced plumbing technicians.',
-      services: SERVICES_CATALOG.filter(s => s.category === 'plumbing')
-    }
+    // {
+    //   id: 'electrical',
+    //   title: 'Electrical Diagnostics & Wiring',
+    //   description: 'Safe, certified solutions for short circuits, tripped breakers, and high-load household installations.',
+    //   services: SERVICES_CATALOG.filter(s => s.category === 'electrical')
+    // },
+    // {
+    //   id: 'plumbing',
+    //   title: 'Plumbing & Drainage Solutions',
+    //   description: 'Hygienic tap, concealed leak, pressure pump, and drain block repairs by experienced plumbing technicians.',
+    //   services: SERVICES_CATALOG.filter(s => s.category === 'plumbing')
+    // }
   ];
 
   const breadcrumbs = [
@@ -54,8 +54,8 @@ export default function ServicesPage({ onBookNow }) {
   return (
     <div className="pt-28 pb-20 bg-neutralBg min-h-screen">
       <SeoHead
-        title="All Doorstep Home Services | Appliance, Electrical & Plumbing Repair | Vetrikharam"
-        description="Browse all certified doorstep home repair services by Vetrikharam in Chennai and Ambattur. AC servicing, refrigerator fix, electrical troubleshooting, and plumbing."
+        title="All Doorstep Home Services | Appliance, Electrical & Plumbing Repair | Vetrigaram"
+        description="Browse all certified doorstep home repair services by Vetrigaram in Chennai and Ambattur. AC servicing, refrigerator fix, electrical troubleshooting, and plumbing."
         canonicalPath="/services"
         schemas={[getBreadcrumbSchema(breadcrumbs)]}
       />

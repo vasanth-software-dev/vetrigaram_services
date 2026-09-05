@@ -16,7 +16,7 @@ export default function Breadcrumbs({ items = [] }) {
           <Link 
             to="/" 
             className="flex items-center gap-1 hover:text-primary transition-colors focus:outline-none"
-            title="Vetrikharam Home Services"
+            title="Vetrigaram Tech Services"
           >
             <Home className="w-3.5 h-3.5 text-primary" />
             <span>Home</span>

@@ -1,5 +1,5 @@
-# Vetrikharam Home Services Robots Configuration
-# https://vasanth-software-dev.github.io/vetrikharam_services/
+# Vetrigaram Tech Services Robots Configuration
+# https://vasanth-software-dev.github.io/Vetrigaram_services/
 
 User-agent: *
 Allow: /
@@ -10,4 +10,4 @@ Disallow: /*?*sort=
 Disallow: /*?*filter=
 
 # XML Sitemaps
-Sitemap: https://vasanth-software-dev.github.io/vetrikharam_services/sitemap.xml
+Sitemap: https://vasanth-software-dev.github.io/Vetrigaram_services/sitemap.xml

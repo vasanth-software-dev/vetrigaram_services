@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Search, CheckCircle, AlertCircle, Building2, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LOCATIONS_CATALOG } from '../data/seoData';
+import { validatePincode, validateCityOrArea } from '../utils/security';
 
 export default function ServiceArea() {
   const [city, setCity] = useState('');
   const [area, setArea] = useState('');
   const [pincode, setPincode] = useState('');
+  const [areas, setAreas] = useState([]);
+  const [loadingAreas, setLoadingAreas] = useState(false);
   
   const [status, setStatus] = useState(null); // 'success', 'error', or null
   const [message, setMessage] = useState('');
@@ -17,6 +20,95 @@ export default function ServiceArea() {
     areas: loc.keyLocalities.join(', '),
     pincodes: loc.pincodes
   }));
+
+  const cleanOfficeName = (name = "") => {
+    return name
+      .replace(/\s+(SO|S. O|BO|HO)$/i, "")
+      .trim();
+  };
+
+  const fetchByPincode = async (pin) => {
+  if (pin.length !== 6) return;
+
+  try {
+    const response = await fetch(
+      `https://api.postalpincode.in/pincode/${pin}`
+    );
+
+    const result = await response.json();
+
+    const postOffices = result?.[0]?.PostOffice || [];
+
+    if (postOffices.length > 0) {
+      const office = postOffices[0];
+
+      setArea(cleanOfficeName(office.Name));
+      setCity(office.District || "");
+      setPincode(pin);
+
+      setStatus("success");
+      setMessage(`Service available in ${cleanOfficeName(office.Name)}`);
+    } else {
+      setArea("");
+      setStatus("error");
+      setMessage("Invalid pincode or location not found.");
+    }
+  } catch (error) {
+    console.error("Pincode lookup failed:", error);
+    setStatus("error");
+    setMessage("Unable to verify pincode. Please try again.");
+  }
+};
+
+
+  const fetchAreas = async (selectedCity) => {
+    if (!selectedCity) {
+      setAreas([]);
+      setArea("");
+      setPincode("");
+      return;
+    }
+
+    setLoadingAreas(true);
+    setAreas([]);
+    setArea("");
+    setPincode("");
+
+    try {
+      const response = await fetch(
+        `https://api.pincodeapi.in/api/v1/district/${encodeURIComponent(
+          selectedCity
+        )}`
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        const postOffices = result.data?.post_offices || [];
+
+        // Remove duplicates
+        const uniqueAreas = postOffices.filter(
+          (item, index, self) =>
+            index ===
+            self.findIndex(
+              (x) =>
+                x.office_name === item.office_name &&
+                x.pincode === item.pincode
+            )
+        );
+
+        setAreas(uniqueAreas);
+      } else {
+        setAreas([]);
+      }
+    } catch (error) {
+      console.error("Error fetching areas:", error);
+      setAreas([]);
+    } finally {
+      setLoadingAreas(false);
+    }
+  };
+
 
   const handleCheck = (e) => {
     e.preventDefault();
@@ -31,26 +123,36 @@ export default function ServiceArea() {
     }
 
     if (trimmedPincode) {
-      if (!/^\d{6}$/.test(trimmedPincode)) {
+      const pinResult = validatePincode(trimmedPincode, { isRequired: true });
+      if (!pinResult.isValid) {
         setStatus('error');
-        setMessage('Please enter a valid 6-digit postal pincode.');
+        setMessage(pinResult.error);
         return;
       }
       
+      const cleanPin = pinResult.sanitized;
       // Validate Chennai / Ambattur pincode prefix (600xxx series)
-      if (trimmedPincode.startsWith('600')) {
+      if (cleanPin.startsWith('600')) {
         setStatus('success');
-        setMessage(`Great news! Vetrikharam technicians operate in pincode ${trimmedPincode} with same-day technician availability.`);
+        setMessage(`Great news! Vetrigaram technicians operate in pincode ${cleanPin} with same-day technician availability.`);
         return;
       } else {
         setStatus('error');
-        setMessage(`Sorry, Vetrikharam currently operates across Chennai and Ambattur (600xxx pincodes). We are expanding to other Tamil Nadu districts soon!`);
+        setMessage(`Sorry, Vetrigaram currently operates across Chennai and Ambattur (600xxx pincodes). We are expanding to other Tamil Nadu districts soon!`);
         return;
       }
     }
 
     if (trimmedCity) {
-      const cityLower = trimmedCity.toLowerCase();
+      const cityResult = validateCityOrArea(trimmedCity, { isRequired: true, maxLength: 60 });
+      if (!cityResult.isValid) {
+        setStatus('error');
+        setMessage(cityResult.error);
+        return;
+      }
+
+      const cleanCity = cityResult.sanitized;
+      const cityLower = cleanCity.toLowerCase();
       const matched = activeLocations.find(loc => 
         loc.city.toLowerCase().includes(cityLower) || cityLower.includes(loc.city.toLowerCase())
       );
@@ -66,17 +168,25 @@ export default function ServiceArea() {
     }
 
     if (trimmedArea) {
-      const areaLower = trimmedArea.toLowerCase();
+      const areaResult = validateCityOrArea(trimmedArea, { isRequired: true, maxLength: 60 });
+      if (!areaResult.isValid) {
+        setStatus('error');
+        setMessage(areaResult.error);
+        return;
+      }
+
+      const cleanArea = areaResult.sanitized;
+      const areaLower = cleanArea.toLowerCase();
       const isAreaServiced = activeLocations.some(loc => 
         loc.areas.toLowerCase().includes(areaLower)
       );
       if (isAreaServiced) {
         setStatus('success');
-        setMessage(`Yes! We provide same-day doorstep service in ${trimmedArea}.`);
+        setMessage(`Yes! We provide same-day doorstep service in ${cleanArea}.`);
         return;
       } else {
         setStatus('success');
-        setMessage(`Yes! Our Chennai & Ambattur mobile units cover ${trimmedArea} and adjacent sectors.`);
+        setMessage(`Yes! Our Chennai & Ambattur mobile units cover ${cleanArea} and adjacent sectors.`);
         return;
       }
     }
@@ -101,74 +211,150 @@ export default function ServiceArea() {
           
           {/* Availability Checker Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-premium flex flex-col justify-center">
-            <h3 className="text-xl font-bold text-navy font-poppins mb-6">Check Availability in Your Area</h3>
-            
-            <form onSubmit={handleCheck} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                
-                {/* City */}
-                <div>
-                  <label className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins">City</label>
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="e.g. Chennai"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
-                  />
-                </div>
+          <h3 className="text-xl font-bold text-navy font-poppins mb-6">
+            Check Availability in Your Area
+          </h3>
 
-                {/* Area */}
-                <div>
-                  <label className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins">Area / Locality</label>
-                  <input
-                    type="text"
-                    value={area}
-                    onChange={(e) => setArea(e.target.value)}
-                    placeholder="e.g. Ambattur"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
-                  />
-                </div>
+  <form onSubmit={handleCheck} className="space-y-5">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-                {/* Pincode */}
-                <div>
-                  <label className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins">Pincode</label>
-                  <input
-                    type="text"
-                    value={pincode}
-                    onChange={(e) => setPincode(e.target.value)}
-                    placeholder="e.g. 600053"
-                    maxLength="6"
-                    className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
-                  />
-                </div>
+      {/* City */}
+      <div>
+        <label
+          htmlFor="service-city"
+          className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins"
+        >
+          City
+        </label>
 
-              </div>
+        <select
+          id="service-city"
+          value={city}
+          onChange={(e) => {
+            const selectedCity = e.target.value;
+            setCity(selectedCity);
+            fetchAreas(selectedCity);
+          }}
+          className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
+        >
+          <option value="">Select City</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Thiruvallur">Thiruvallur</option>
+        </select>
+      </div>
 
-              <button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary-dark text-white font-bold p-4 rounded-xl shadow-button-blue transition-all active:scale-[0.98] flex items-center justify-center space-x-2"
-              >
-                <Search className="w-4 h-4" />
-                <span>Check Technician Availability</span>
-              </button>
-            </form>
+      {/* Area */}
+      <div>
+        <label
+          htmlFor="service-area"
+          className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins"
+        >
+          Area / Locality
+        </label>
 
-            {/* Status Messages */}
-            {status && (
-              <div className={`mt-6 p-4 rounded-2xl flex items-start space-x-3 border ${
-                status === 'success' 
-                  ? 'bg-emerald-50 border-emerald-100 text-emerald-800' 
-                  : 'bg-red-50 border-red-100 text-red-800'
-              }`}>
-                {status === 'success' 
-                  ? <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" /> 
-                  : <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-                }
-                <span className="text-sm font-semibold">{message}</span>
-              </div>
-            )}
-          </div>
+        <select
+          id="service-area"
+          value={area}
+          disabled={!city || loadingAreas}
+          onChange={(e) => {
+            const selectedArea = e.target.value;
+
+            const selectedOffice = areas.find(
+              (item) => item.office_name === selectedArea
+            );
+
+            setArea(selectedArea);
+            setPincode(selectedOffice?.pincode || "");
+          }}
+          className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none disabled:opacity-60"
+        >
+          <option value="">
+            {loadingAreas ? "Loading areas..." : "Select Area"}
+          </option>
+
+          {areas.map((item, index) => (
+            <option
+              key={`${item.pincode}-${item.office_name}-${index}`}
+              value={item.office_name}
+            >
+              {cleanOfficeName(item.office_name)}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Pincode */}
+      <div>
+        <label
+          htmlFor="service-pincode"
+          className="block text-xs font-bold text-navy/70 uppercase tracking-wide mb-2 font-poppins"
+        >
+          Pincode
+        </label>
+
+        <input
+        id="service-pincode"
+        type="text"
+        inputMode="numeric"
+        autoComplete="postal-code"
+        value={pincode}
+        onChange={(e) => {
+          const value = e.target.value.replace(/\D/g, "").slice(0, 6);
+
+          setPincode(value);
+
+          // Clear area while typing
+          if (value.length < 6) {
+            setArea("");
+            setStatus("");
+            setMessage("");
+          }
+
+          // Lookup automatically when 6 digits are entered
+          if (value.length === 6) {
+            fetchByPincode(value);
+          }
+        }}
+        placeholder="e.g. 600056"
+        maxLength={6}
+        className="w-full bg-neutralBg px-4 py-3 rounded-xl border border-gray-200 text-sm font-medium text-navy focus:outline-none"
+      />
+
+
+      </div>
+
+    </div>
+
+    <button
+      type="submit"
+      disabled={!city || !area || !pincode}
+      className="w-full bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold p-4 rounded-xl shadow-button-blue transition-all active:scale-[0.98] flex items-center justify-center space-x-2"
+    >
+      <Search className="w-4 h-4" />
+      <span>Check Technician Availability</span>
+    </button>
+  </form>
+
+  {/* Status Messages */}
+  {status && (
+    <div
+      className={`mt-6 p-4 rounded-2xl flex items-start space-x-3 border ${
+        status === "success"
+          ? "bg-emerald-50 border-emerald-100 text-emerald-800"
+          : "bg-red-50 border-red-100 text-red-800"
+      }`}
+    >
+      {status === "success" ? (
+        <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+      ) : (
+        <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+      )}
+
+      <span className="text-sm font-semibold">{message}</span>
+    </div>
+  )}
+</div>
+
 
           {/* Service Area Cards */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
