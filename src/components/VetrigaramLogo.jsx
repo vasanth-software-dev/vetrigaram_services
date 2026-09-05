@@ -8,7 +8,7 @@ export default function VetrigaramLogo({
   size = 'md', // 'sm', 'md', 'lg'
   showText = true,
   title = 'Vetrigaram',
-  subtitle = 'Home Services',
+  subtitle = 'Tech Services',
   textLight = false,
   className = '',
   iconOnly = false,
