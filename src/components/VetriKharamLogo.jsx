@@ -42,7 +42,7 @@ export default function VetriKharamLogo({
           />
         ) : (
           <video
-            src="/logo.mp4"
+            src={`${import.meta.env.BASE_URL}logo.mp4`}
             autoPlay
             loop
             muted
