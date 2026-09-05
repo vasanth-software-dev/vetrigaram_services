@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/vetrigaram-tech-services/',
+  base: '/vetrigaram_services/',
 });
