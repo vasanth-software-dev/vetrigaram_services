@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Users, CheckCircle, ShieldCheck, Star } from 'lucide-react';
+import { TrendingUp, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 
-function CountUp({ end, suffix = '', duration = 1500 }) {
+function CountUp({ end, suffix = '', prefix = '', decimals = 0, duration = 1600 }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -10,7 +10,6 @@ function CountUp({ end, suffix = '', duration = 1500 }) {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
       
-      // Calculate current value based on progress
       const currentValue = progress * end;
       setCount(currentValue);
 
@@ -21,80 +20,103 @@ function CountUp({ end, suffix = '', duration = 1500 }) {
     window.requestAnimationFrame(step);
   }, [end, duration]);
 
-  // Handle floats vs integers
-  const displayVal = Number.isInteger(end) 
-    ? Math.floor(count).toLocaleString() 
-    : count.toFixed(1);
+  const displayVal = decimals > 0 
+    ? count.toFixed(decimals) 
+    : Math.floor(count).toLocaleString();
 
-  return <span>{displayVal}{suffix}</span>;
+  return <span>{prefix}{displayVal}{suffix}</span>;
 }
 
 export default function Stats() {
-  const stats = [
+  const metrics = [
     {
-      label: "Happy Customers",
-      endVal: 10000,
-      suffix: "+",
-      icon: Users,
-      desc: "Serviced & satisfied families"
+      value: 250,
+      prefix: '+',
+      suffix: '',
+      decimals: 0,
+      label: 'Projects Delivered',
+      detail: 'Enterprise sites & residential facilities',
+      color: 'text-[#FF7A00]',
+      badgeBg: 'bg-[#FF7A00]/15',
+      icon: CheckCircle2,
     },
     {
-      label: "Services Completed",
-      endVal: 5000,
-      suffix: "+",
-      icon: CheckCircle,
-      desc: "Repairs & setups completed"
-    },
-    {
-      label: "Verified Technicians",
-      endVal: 100,
-      suffix: "+",
+      value: 98,
+      prefix: '+',
+      suffix: '%',
+      decimals: 0,
+      label: 'Client Satisfaction',
+      detail: 'Verified 5-star customer ratings',
+      color: 'text-[#2385E8]',
+      badgeBg: 'bg-[#2385E8]/15',
       icon: ShieldCheck,
-      desc: "Certified local technicians"
     },
     {
-      label: "Average Rating",
-      endVal: 4.8,
-      suffix: "/5",
-      icon: Star,
-      desc: "Based on 10K+ customer reviews"
+      value: 3.5,
+      prefix: '',
+      suffix: 'x',
+      decimals: 1,
+      label: 'Average Growth',
+      detail: 'Faster diagnostic & execution speed',
+      color: 'text-[#FF7A00]',
+      badgeBg: 'bg-[#FF7A00]/15',
+      icon: TrendingUp,
+    },
+    {
+      value: 24,
+      prefix: '',
+      suffix: '/7',
+      decimals: 0,
+      label: 'Rapid Support',
+      detail: 'Rapid dispatch across Chennai & Ambattur',
+      color: 'text-[#2385E8]',
+      badgeBg: 'bg-[#2385E8]/15',
+      icon: Zap,
     }
   ];
 
   return (
-    <section className="relative py-16 bg-gradient-premium text-white overflow-hidden">
-      {/* Decorative circles */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-0 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-orange/10 rounded-full blur-3xl -z-0 pointer-events-none" />
+    <section className="relative py-16 bg-[#0B2345] text-white border-b border-[#2385E8]/20 overflow-hidden">
+      {/* Subtle Orbital Background Graphics */}
+      <div className="absolute -top-24 right-1/4 w-96 h-96 rounded-full border border-dashed border-[#2385E8]/15 pointer-events-none" />
+      <div className="absolute -bottom-24 left-1/4 w-96 h-96 rounded-full border border-[#FF7A00]/10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, idx) => {
-            const IconComponent = stat.icon;
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          {metrics.map((item, idx) => {
+            const IconComponent = item.icon;
             return (
               <div 
-                key={idx} 
-                className="flex flex-col items-center text-center p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm"
+                key={idx}
+                className="relative p-6 sm:p-7 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#2385E8]/40 hover:bg-white/[0.07] transition-all duration-300 group hover:-translate-y-1 shadow-card-dark"
               >
-                {/* Icon */}
-                <div className="bg-white/10 p-3 rounded-2xl mb-4 text-orange">
-                  <IconComponent className="w-6 h-6 text-orange fill-orange/10" />
+                {/* Diagonal Accent Top-Left Line */}
+                <div className="absolute top-0 left-6 w-8 h-[2px] bg-gradient-to-r from-[#FF7A00] to-[#2385E8] rounded-full" />
+
+                {/* Metric Icon */}
+                <div className={`w-10 h-10 rounded-xl ${item.badgeBg} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                  <IconComponent className={`w-5 h-5 ${item.color}`} />
                 </div>
-                
-                {/* Counter */}
-                <span className="text-3xl sm:text-4xl font-extrabold font-poppins tracking-tight block">
-                  <CountUp end={stat.endVal} suffix={stat.suffix} />
-                </span>
 
-                {/* Label */}
-                <span className="text-sm font-bold text-gray-200 mt-2 font-poppins block leading-tight">
-                  {stat.label}
-                </span>
+                {/* Big Number */}
+                <div className={`text-3.5xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight ${item.color} leading-none mb-2`}>
+                  <CountUp 
+                    end={item.value} 
+                    prefix={item.prefix} 
+                    suffix={item.suffix} 
+                    decimals={item.decimals} 
+                  />
+                </div>
 
-                {/* Description */}
-                <span className="text-[11px] text-gray-300 mt-1 block">
-                  {stat.desc}
-                </span>
+                {/* Heading */}
+                <h4 className="text-sm sm:text-base font-bold text-white tracking-tight mb-1">
+                  {item.label}
+                </h4>
+
+                {/* Subtext */}
+                <p className="text-xs text-gray-300 leading-snug">
+                  {item.detail}
+                </p>
               </div>
             );
           })}

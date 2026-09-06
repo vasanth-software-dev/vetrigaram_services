@@ -1,42 +1,34 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const faqs = [
     {
-      q: "How quickly can a technician arrive?",
-      a: "Typically, our certified technicians can arrive at your doorstep within 2 to 4 hours of booking, depending on your preferred time slot and technician availability in your local area."
-    },
-    // {
-    //   q: "How much does a service cost?",
-    //   a: "Service pricing starts at a flat rate of $29 for minor fixes. For larger wiring, piping, or complex installs, we perform an inspection and provide a transparent, itemized quote before any work begins."
-    // },
-    // {
-    //   q: "Do you provide same-day service?",
-    //   a: "Yes! We offer same-day appliance, electrical, and plumbing repairs for all bookings confirmed before 4:00 PM. Active standby teams are dispatched daily."
-    // },
-    {
-      q: "Are spare parts included in the price?",
-      a: "The service fee covers standard diagnostics and labor. If any replacement parts are required (such as capacitors, compressor units, taps, or cables), they are billed separately at genuine retail pricing with full warranties."
-    },
-    // {
-    //   q: "Do your repairs come with a warranty?",
-    //   a: "Absolutely. We back our craftsmanship and replacement parts with a comprehensive 30-day vetikharam Service Warranty. If the same issue recurs within 30 days, we return and fix it for free."
-    // },
-    {
-      q: "Can I cancel or reschedule my booking?",
-      a: "Yes, you can reschedule or cancel your appointment at no extra cost up to 2 hours before your chosen time slot. You can manage this via the online portal or by calling customer care."
+      q: "How quickly can a technician arrive at my doorstep in Chennai & Ambattur?",
+      a: "Our mobile technician hubs ensure dispatch within 60 to 90 minutes in Ambattur and 2 to 4 hours across wider Chennai areas, depending on your preferred booking slot."
     },
     {
-      q: "What payment methods do you accept?",
-      a: "We accept credit/debit cards, digital wallet transfers, net banking, and cash on delivery after the technician completes the service to your satisfaction."
+      q: "What is the ₹149 inspection fee policy?",
+      a: "We charge a nominal ₹149 diagnostic fee for the technician's arrival, inspection, and formal estimate. If you approve the repair, this entire ₹149 is adjusted and deducted from your final bill, effectively making the inspection free."
     },
-    // {
-    //   q: "Do you provide emergency services?",
-    //   a: "Yes! We have standby teams on call for sudden pipe leakages, water tank overflows, or electrical short circuits. Select the nearest slot in the booking form or call our support line immediately."
-    // }
+    {
+      q: "Are replacement parts authentic and covered by a warranty?",
+      a: "Yes. We source only genuine, brand-certified replacement parts. Every spare part installed carries authentic manufacturer warranty plus our unconditional 30-day Vetrigaram service guarantee."
+    },
+    {
+      q: "What happens if the problem returns after repair?",
+      a: "Every completed repair is protected under our 30-day warranty. If the exact same issue reoccurs within 30 days of service, a senior engineer will re-inspect and resolve it without additional labor charges."
+    },
+    {
+      q: "Can I reschedule or cancel my appointment?",
+      a: "Yes, you can reschedule or cancel your appointment free of charge up to 2 hours before your scheduled time slot by calling our direct helpline at +91 6374121120."
+    },
+    {
+      q: "What payment methods are supported?",
+      a: "We accept all UPI platforms (Google Pay, PhonePe, Paytm), credit/debit cards, net banking, and cash on delivery after the service is fully verified and completed to your 100% satisfaction."
+    }
   ];
 
   const toggleFAQ = (index) => {
@@ -44,48 +36,57 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-20 bg-neutralBg">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-24 bg-[#F5F7FA] relative overflow-hidden border-b border-[#D9DEE5]/60">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-primary font-bold text-sm uppercase tracking-wider font-poppins font-semibold">Got Questions?</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mt-2 tracking-tight">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#2385E8]/10 border border-[#2385E8]/30 text-[#1459B8] text-xs font-bold uppercase tracking-wider mb-4">
+            <HelpCircle className="w-3.5 h-3.5 text-[#2385E8]" />
+            <span>Answers & Assurance</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071A33] tracking-tight leading-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-navy/70 mt-4 text-base sm:text-lg">
-            Find answers to common questions about our services, booking terms, technicians, and warranties.
+          <p className="text-gray-600 mt-4 text-base sm:text-lg leading-relaxed">
+            Everything you need to know about our certified technician arrival, pricing transparency, and service warranties.
           </p>
         </div>
 
-        {/* Accordion List */}
+        {/* FAQ Accordion List */}
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
             return (
               <div 
-                key={index} 
-                className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-200"
+                key={index}
+                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                  isOpen 
+                    ? 'bg-white border-[#2385E8]/40 shadow-premium' 
+                    : 'bg-white/80 border-[#D9DEE5] hover:border-gray-300'
+                }`}
               >
-                {/* Header/Question Trigger */}
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-5 text-left font-bold text-navy text-base sm:text-lg hover:text-primary transition-colors focus:outline-none"
+                  className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none cursor-pointer"
+                  aria-expanded={isOpen}
                 >
-                  <span className="pr-4 font-poppins">{faq.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : ''}`} />
+                  <span className="text-base sm:text-lg font-bold text-[#071A33] tracking-tight pr-4">
+                    {faq.q}
+                  </span>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                    isOpen ? 'bg-[#FF7A00] text-white rotate-180' : 'bg-[#071A33]/5 text-[#071A33]'
+                  }`}>
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
                 </button>
 
-                {/* Body/Answer Panel */}
-                <div 
-                  className={`transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-56 opacity-100 border-t border-gray-50' : 'max-h-0 opacity-0 pointer-events-none'
-                  }`}
-                >
-                  <p className="p-5 text-sm sm:text-[15px] text-navy/65 leading-relaxed bg-neutralBg/30 font-medium">
-                    {faq.a}
-                  </p>
-                </div>
+                {isOpen && (
+                  <div className="px-6 pb-6 pt-1 text-sm text-gray-600 leading-relaxed border-t border-gray-100">
+                    <p>{faq.a}</p>
+                  </div>
+                )}
               </div>
             );
           })}

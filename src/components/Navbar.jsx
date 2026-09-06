@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Phone, MessageSquare } from 'lucide-react';
 import Logo from './Logo';
 import { CONTACT_NUMBER } from '../utils/contacts';
 
-export default function Navbar() {
+export default function Navbar({ onBookClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -14,7 +14,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 25) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -25,12 +25,11 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    // { label: 'Home', href: '#home', path: '/' },
-    { label: 'Services', href: '#services', path: '/services' },
-    { label: 'Locations', path: '/locations' },
-    { label: 'About Us', path: '/about' },
-    { label: 'Reviews', href: '#reviews', path: '/#reviews' },
-    { label: 'FAQ', href: '#faq', path: '/#faq' },
+    { label: 'Home', path: '/' },
+    { label: 'Services / Solutions', path: '/services' },
+    { label: 'Why Us', href: '#why-us', path: '/#why-us' },
+    { label: 'Case Studies', href: '#case-studies', path: '/#case-studies' },
+    { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' }
   ];
 
@@ -41,7 +40,7 @@ export default function Navbar() {
     if (isHomePage && item.href) {
       const element = document.querySelector(item.href);
       if (element) {
-        const offset = 80;
+        const offset = 85;
         const bodyRect = document.body.getBoundingClientRect().top;
         const elementRect = element.getBoundingClientRect().top;
         const elementPosition = elementRect - bodyRect;
@@ -72,152 +71,159 @@ export default function Navbar() {
     }
   };
 
-  const sidebarCategories = [
-    {
-      title: "Appliance Repair",
-      categoryKey: "appliances",
-      items: [
-        { name: "AC Repair & Servicing", slug: "ac-repair" },
-        { name: "Refrigerator Repair", slug: "refrigerator-repair" },
-        { name: "Washing Machine Repair", slug: "washing-machine-repair" },
-        { name: "Geyser & Heater Repair", slug: "geyser-repair" }
-      ]
-    },
-    // {
-    //   title: "Electrical Services",
-    //   categoryKey: "electrical",
-    //   items: [
-    //     { name: "Electrical Repair", slug: "electrical-repair" },
-    //     { name: "Switch & Socket Repair", slug: "switch-socket-repair" },
-    //     { name: "Fan Installation & Repair", slug: "fan-installation" },
-    //     { name: "Wiring & Rewiring", slug: "wiring-rewiring" }
-    //   ]
-    // },
-    // {
-    //   title: "Plumbing Services",
-    //   categoryKey: "plumbing",
-    //   items: [
-    //     { name: "Plumbing Repair", slug: "plumbing-repair" },
-    //     { name: "Tap & Faucet Repair", slug: "tap-faucet-repair" },
-    //     { name: "Drain Cleaning", slug: "drain-cleaning" },
-    //     { name: "Water Tank Services", slug: "water-tank-services" }
-    //   ]
-    // }
-  ];
-
-  const handleCategoryItemClick = (slug) => {
+  const handleCtaClick = () => {
     setIsOpen(false);
-    navigate(`/services/${slug}`);
+    if (onBookClick) {
+      onBookClick();
+    } else {
+      const bookingEl = document.getElementById('booking');
+      if (bookingEl) {
+        bookingEl.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/contact');
+      }
+    }
   };
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'glass-nav shadow-premium' : 'bg-transparent border-b border-transparent'}`}>
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? 'glass-nav-scrolled' : 'glass-nav-transparent'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
+            {/* Brand Logo */}
             <Link to="/" className="flex items-center group shrink-0 focus:outline-none">
-              <Logo size="md" />
+              <Logo size="md" textLight={true} />
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-6 text-sm font-semibold text-navy">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.path}
-                  onClick={(e) => handleNavClick(e, item)}
-                  className="hover:text-primary transition-colors cursor-pointer"
-                >
-                  {item.label}
-                </a>
-              ))}
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-7 text-sm font-medium text-gray-200">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.path}
+                    onClick={(e) => handleNavClick(e, item)}
+                    className={`transition-colors duration-200 hover:text-[#FF7A00] relative py-1 cursor-pointer ${
+                      isActive ? 'text-white font-semibold' : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF7A00] to-[#2385E8] rounded-full" />
+                    )}
+                  </a>
+                );
+              })}
             </nav>
 
-            {/* Actions & Hamburger Menu */}
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* WhatsApp CTA */}
-              <a 
-                href={`https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrigaram!%20Home%20Appliance%20Repair%20and%20Service%20Company`}
-                target="_blank" 
+            {/* Right CTAs */}
+            <div className="flex items-center space-x-3">
+              {/* WhatsApp Quick Chat */}
+              <a
+                href={`https://api.whatsapp.com/send?phone=+91${CONTACT_NUMBER}&text=Hello%20Vetrigaram!%20I%20would%20like%20to%20inquire%20about%20your%20services.`}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#20ba5a] text-white p-2 sm:px-3.5 sm:py-2 rounded-lg font-bold text-xs sm:text-sm transition-all shadow-sm active:scale-95 flex items-center space-x-1.5 shrink-0"
+                aria-label="Chat on WhatsApp"
+                className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 text-white border border-white/15 transition-all"
               >
-                <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z" fill="#ffffff"></path><path fillRule="evenodd" clipRule="evenodd" d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z" fill="#ffffff"></path></svg>
-                <span className="hidden sm:inline">WhatsApp</span>
+                <MessageSquare className="w-3.5 h-3.5 text-[#25D366]" />
+                <span>WhatsApp</span>
               </a>
 
-              {/* Phone CTA */}
-              <a 
-                href={`tel:+91${CONTACT_NUMBER}`} 
-                className="border border-navy/20 bg-white hover:border-navy text-navy font-semibold p-2 sm:px-3 sm:py-2 rounded-lg text-xs sm:text-sm transition-all flex items-center space-x-1.5 shadow-sm active:scale-95 shrink-0"
+              {/* Call CTA */}
+              <a
+                href={`tel:+91${CONTACT_NUMBER}`}
+                className="hidden md:inline-flex items-center space-x-1.5 text-xs font-semibold px-3.5 py-2 rounded-lg text-white border border-white/15 hover:border-white/30 transition-all"
               >
-                <Phone className="w-3.5 h-3.5 text-orange shrink-0" />
-                <span className="hidden sm:inline">{CONTACT_NUMBER}</span>
-                <span className="inline sm:hidden">Call</span>
+                <Phone className="w-3.5 h-3.5 text-[#FF7A00]" />
+                <span>+91 {CONTACT_NUMBER}</span>
               </a>
 
-              {/* Hamburger Button */}
+              {/* Primary High-Conversion CTA */}
+              <button
+                onClick={handleCtaClick}
+                className="bg-gradient-orange-btn text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-button-orange flex items-center space-x-1.5 group shrink-0"
+              >
+                <span>Get Started</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </button>
+
+              {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-xl text-navy hover:text-primary hover:bg-navy-light/5 focus:outline-none transition-colors"
+                className="lg:hidden inline-flex items-center justify-center p-2 rounded-xl text-white hover:bg-white/10 focus:outline-none transition-colors"
                 aria-label="Toggle navigation menu"
                 aria-expanded={isOpen}
               >
-                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isOpen ? <X className="w-6 h-6 text-[#FF7A00]" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Drawer Panel */}
-      <div className={`fixed top-0 left-0 w-80 max-w-[85%] h-full bg-white shadow-2xl flex flex-col overflow-y-auto transition-transform duration-350 ease-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} z-[9999]`}>
+      {/* Mobile Drawer Navigation */}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] transition-opacity duration-300 lg:hidden ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      <div
+        className={`fixed top-0 right-0 w-80 max-w-[85%] h-full bg-[#071A33] border-l border-[#2385E8]/20 shadow-2xl flex flex-col overflow-y-auto transition-transform duration-300 ease-out z-[9999] lg:hidden ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
         {/* Drawer Header */}
-        <div className="flex justify-between items-center px-5 py-4 bg-[#0B1B3D] text-white h-20 shrink-0 border-b border-[#0066FF]/20">
-          <Logo size="sm" textLight title="Vetrigaram" subtitle="Menu" />
-          <button onClick={() => setIsOpen(false)} aria-label="Close menu" className="text-white hover:text-orange p-1 transition-colors">
+        <div className="flex justify-between items-center px-6 py-5 border-b border-white/10 bg-[#0B2345]">
+          <Logo size="sm" textLight={true} />
+          <button
+            onClick={() => setIsOpen(false)}
+            aria-label="Close menu"
+            className="text-gray-300 hover:text-[#FF7A00] p-1.5 transition-colors"
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Navigation Quick Links */}
-        <div className="bg-[#0B1B3D]/5 p-4 border-b border-gray-150">
-          <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider block mb-2 px-1 font-poppins">Quick Links</span>
-          <div className="grid grid-cols-2 gap-2">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.path}
-                onClick={(e) => handleNavClick(e, item)}
-                className="text-[13px] font-semibold text-navy/85 hover:text-primary hover:bg-primary/5 px-2.5 py-2 rounded-lg transition-colors text-left font-poppins cursor-pointer"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+        {/* Drawer Links */}
+        <div className="flex-grow px-6 py-6 space-y-2">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.path}
+              onClick={(e) => handleNavClick(e, item)}
+              className="flex items-center justify-between py-3 px-3.5 rounded-xl text-gray-200 hover:text-white hover:bg-white/5 font-medium text-sm transition-all"
+            >
+              <span>{item.label}</span>
+              <ArrowUpRight className="w-4 h-4 text-[#FF7A00] opacity-60" />
+            </a>
+          ))}
         </div>
 
-        {/* Categories List */}
-        <div className="flex-grow flex flex-col bg-white">
-          {sidebarCategories.map((cat, idx) => (
-            <div key={idx} className="flex flex-col">
-              <div className="bg-[#0B1B3D] text-white px-5 py-2.5 font-semibold text-[12px] tracking-wide uppercase font-poppins text-left border-b border-[#0066FF]/10">
-                {cat.title}
-              </div>
-              <div className="flex flex-col">
-                {cat.items.map((item, itemIdx) => (
-                  <button
-                    key={itemIdx}
-                    onClick={() => handleCategoryItemClick(item.slug, cat.categoryKey, item.name)}
-                    className="w-full text-left bg-white border-b border-gray-100 px-6 py-3 text-[13px] font-semibold text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors block font-poppins"
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
+        {/* Drawer Footer Actions */}
+        <div className="p-6 border-t border-white/10 bg-[#0B2345]/50 space-y-3">
+          <button
+            onClick={handleCtaClick}
+            className="w-full bg-gradient-orange-btn text-white font-bold py-3 px-4 rounded-xl shadow-button-orange flex items-center justify-center space-x-2 text-sm"
+          >
+            <span>Get Started</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+
+          <a
+            href={`tel:+91${CONTACT_NUMBER}`}
+            className="w-full inline-flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl border border-white/15 text-white text-xs font-semibold hover:bg-white/5 transition-all"
+          >
+            <Phone className="w-3.5 h-3.5 text-[#FF7A00]" />
+            <span>Call +91 {CONTACT_NUMBER}</span>
+          </a>
         </div>
       </div>
     </>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-  AirVent, IceCream, WashingMachine, Flame, 
-  Zap, Fan, Power, Droplet, Wrench, ShieldAlert
+  AirVent, IceCream, WashingMachine, Flame, Fan
 } from 'lucide-react';
 
 export default function PopularServices({ onBookNow }) {
@@ -80,7 +79,7 @@ export default function PopularServices({ onBookNow }) {
 
         {/* Popular Services Scroll/Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {popularServices  .filter((s) => s.status).map((service, index) => {
+          {popularServices  .filter((s) => s.status).map((service) => {
             const IconComponent = service.icon;
             return (
               <div 

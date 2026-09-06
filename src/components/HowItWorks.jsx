@@ -48,7 +48,7 @@ export default function HowItWorks({ onBookClick }) {
           <div className="absolute top-24 left-[15%] right-[15%] h-0.5 border-t-2 border-dashed border-gray-200 -z-0 hidden lg:block" />
 
           {/* Individual Steps */}
-          {steps.map((step, idx) => {
+          {steps.map((step) => {
             const IconComponent = step.icon;
             return (
               <div key={step.num} className="relative z-10 flex flex-col items-center text-center px-4">

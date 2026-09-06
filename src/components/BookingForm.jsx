@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from "@emailjs/browser";
-import { servicesData } from './Services';
+import { servicesData } from '../data/servicesData';
 import { Calendar, Clock, Phone, MapPin, ClipboardList, CheckCircle2, User, ArrowRight } from 'lucide-react';
 import { DEFAULT_TECHNICIANS } from '../utils/contacts';
 import {
@@ -250,18 +250,21 @@ export default function BookingForm({ initialCategory = '', initialService = '',
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-primary font-bold text-sm uppercase tracking-wider font-poppins">Get Help Now</span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mt-2 tracking-tight">
-            {isSubmitted ? "Booking Confirmed!" : "Book a Technician Today"}
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#FF7A00]/10 border border-[#FF7A00]/30 text-[#FF7A00] text-xs font-bold uppercase tracking-wider mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7A00]" />
+            <span>Instant Dispatch Booking</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071A33] mt-2 tracking-tight">
+            {isSubmitted ? "Booking Confirmed!" : "Book a Certified Specialist"}
           </h2>
-          <p className="text-navy/70 mt-3 text-base sm:text-lg">
+          <p className="text-gray-600 mt-3 text-base sm:text-lg">
             {isSubmitted 
               ? "Your request has been successfully registered. A technician is on their way." 
-              : "Fill out the simple form below and we will assign a certified expert right away."}
+              : "Schedule your doorstep diagnosis with verified specialists across Chennai and Ambattur."}
           </p>
         </div>
 
-        <div className="bg-neutralBg rounded-[36px] p-6 sm:p-10 border border-gray-100 shadow-premium">
+        <div className="bg-white rounded-2xl p-6 sm:p-10 border border-[#D9DEE5] shadow-premium">
           
           {!isSubmitted ? (
             /* Booking Form */
@@ -450,12 +453,13 @@ export default function BookingForm({ initialCategory = '', initialService = '',
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-dark disabled:bg-primary/60 text-white font-extrabold py-4 rounded-2xl shadow-button-blue transition-all duration-200 text-[16px] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                  className="w-full bg-gradient-orange-btn disabled:opacity-60 text-white font-bold py-4 rounded-xl shadow-button-orange transition-all duration-200 text-base flex items-center justify-center space-x-2 group cursor-pointer"
                 >
-                  {isSubmitting ? "Submitting..." : "Confirm Booking"}
+                  <span>{isSubmitting ? "Dispatching Request..." : "Confirm Booking & Schedule Dispatch"}</span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </button>
-                <p className="text-center text-xs text-navy/60 mt-3 font-semibold font-poppins">
-                  ★ Per visit (Inspection charge) ₹149 applies if no service is availed (waived off if service is taken).
+                <p className="text-center text-xs text-gray-500 mt-3 font-medium">
+                  ★ Standard ₹149 inspection charge is fully adjusted and waived from your final service invoice.
                 </p>
               </div>
 

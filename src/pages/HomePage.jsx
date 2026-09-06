@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
-import Services from '../components/Services';
-import PopularServices from '../components/PopularServices';
-import WhyChooseUs from '../components/WhyChooseUs';
-import HowItWorks from '../components/HowItWorks';
-import BookingForm from '../components/BookingForm';
-import ServiceArea from '../components/ServiceArea';
+import TrustProof from '../components/TrustProof';
 import Stats from '../components/Stats';
+import Services from '../components/Services';
+import WhyChooseUs from '../components/WhyChooseUs';
+import CaseStudies from '../components/CaseStudies';
 import Reviews from '../components/Reviews';
+import BookingForm from '../components/BookingForm';
 import FAQ from '../components/FAQ';
 import CTA from '../components/CTA';
 import SeoHead from '../seo/SeoHead';
@@ -74,26 +73,46 @@ export default function HomePage({ onBookClick, onBookNow: externalBookNow, sele
   return (
     <>
       <SeoHead
-        title="Vetrigaram Tech Services | Premium Appliance Repair"
-        description="Vetrigaram Tech Services delivers fast, certified, and warranty-backed appliance repair, electrical troubleshooting, and plumbing services across Chennai and Ambattur. ₹149 inspection."
+        title="Vetrigaram Tech Services | Turn Momentum Into Measurable Growth"
+        description="Vetrigaram delivers fast, certified, and warranty-backed appliance engineering, precision diagnostic troubleshooting, and rapid doorstep repair across Chennai and Ambattur. ₹149 inspection."
         canonicalPath="/"
         schemas={schemas}
       />
 
+      {/* Hero Section with Orbital Logo Composition */}
       <Hero onBookClick={onBookClick} />
-      <Services onBookNow={handleBookNow} />
-      <PopularServices onBookNow={handleBookNow} />
-      <WhyChooseUs />
-      <HowItWorks onBookClick={onBookClick} />
-      <BookingForm 
-        initialCategory={cat || selectedCategory} 
-        initialService={serv || selectedService}
-        onResetSelection={handleReset}
-      />
-      <ServiceArea />
+
+      {/* Trust & Enterprise Social Proof */}
+      <TrustProof />
+
+      {/* Metrics & Momentum Section */}
       <Stats />
+
+      {/* Solutions / Services Cards Section */}
+      <Services onBookNow={handleBookNow} />
+
+      {/* Why Us / About Split-Layout Section */}
+      <WhyChooseUs />
+
+      {/* Case Studies & Measurable Breakthroughs */}
+      <CaseStudies />
+
+      {/* Customer Testimonials & Reviews */}
       <Reviews />
+
+      {/* Direct Booking & Dispatch Form */}
+      <div id="booking">
+        <BookingForm 
+          initialCategory={cat || selectedCategory} 
+          initialService={serv || selectedService}
+          onResetSelection={handleReset}
+        />
+      </div>
+
+      {/* Frequently Asked Questions */}
       <FAQ />
+
+      {/* Final Full-Width Momentum CTA */}
       <CTA onBookClick={onBookClick} />
     </>
   );
