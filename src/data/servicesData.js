@@ -48,13 +48,13 @@ export const servicesData = {
         highlight: "Tested Purity",
         category: "appliances"
       },
-      {
-        name: "Inverter & Power Backup Overhaul",
-        desc: "Battery capacity testing, circuit load balancing, charging module repair, and automated transfer switch check.",
-        icon: BatteryCharging,
-        highlight: "Zero Downtime",
-        category: "appliances"
-      }
+      // {
+      //   name: "Inverter & Power Backup Overhaul",
+      //   desc: "Battery capacity testing, circuit load balancing, charging module repair, and automated transfer switch check.",
+      //   icon: BatteryCharging,
+      //   highlight: "Zero Downtime",
+      //   category: "appliances"
+      // }
     ]
   }
 };

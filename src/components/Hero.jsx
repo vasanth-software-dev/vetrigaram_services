@@ -70,7 +70,7 @@ export default function Hero({ onBookClick }) {
                 onClick={onBookClick}
                 className="bg-gradient-orange-btn text-white font-bold text-base px-8 py-4 rounded-xl shadow-button-orange flex items-center justify-center space-x-2.5 group"
               >
-                <span>Get Started</span>
+                <span>Book Now</span>
                 <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </button>
 

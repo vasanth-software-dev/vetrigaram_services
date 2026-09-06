@@ -136,7 +136,7 @@ export default function Navbar({ onBookClick }) {
                 onClick={handleCtaClick}
                 className="bg-gradient-orange-btn text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl shadow-button-orange flex items-center space-x-1.5 group shrink-0"
               >
-                <span>Get Started</span>
+                <span>Book Now</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
 
@@ -200,7 +200,7 @@ export default function Navbar({ onBookClick }) {
             onClick={handleCtaClick}
             className="w-full bg-gradient-orange-btn text-white font-bold py-3 px-4 rounded-xl shadow-button-orange flex items-center justify-center space-x-2 text-sm"
           >
-            <span>Get Started</span>
+            <span>Book Now</span>
             <ArrowUpRight className="w-4 h-4" />
           </button>
 
