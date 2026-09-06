@@ -34,7 +34,7 @@ export default function Footer() {
           {/* Brand Column (Col 1-4) */}
           <div className="lg:col-span-4 flex flex-col items-start text-left">
             <Link to="/" className="flex items-center group mb-5 focus:outline-none">
-              <Logo size="md" textLight={true} />
+              <Logo size="md" textLight={true} showTamil={true} />
             </Link>
 
             <p className="text-sm text-gray-300 leading-relaxed mb-6 max-w-sm font-normal">
@@ -94,7 +94,7 @@ export default function Footer() {
             </h4>
             
             <ul className="space-y-3 text-sm text-gray-300">
-              <li className="flex items-start space-x-2.5">
+              <li className="flex items-center space-x-2.5">
                 <MapPin className="w-4 h-4 text-[#FF7A00] shrink-0 mt-1" />
                 <span className="text-xs sm:text-sm">Ambattur Industrial Estate, Chennai 600053</span>
               </li>

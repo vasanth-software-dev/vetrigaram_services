@@ -6,6 +6,7 @@ import Services from '../components/Services';
 import WhyChooseUs from '../components/WhyChooseUs';
 import CaseStudies from '../components/CaseStudies';
 import Reviews from '../components/Reviews';
+import ServiceArea from '../components/ServiceArea';
 import BookingForm from '../components/BookingForm';
 import FAQ from '../components/FAQ';
 import CTA from '../components/CTA';
@@ -73,7 +74,7 @@ export default function HomePage({ onBookClick, onBookNow: externalBookNow, sele
   return (
     <>
       <SeoHead
-        title="Vetrigaram Tech Services | Turn Momentum Into Measurable Growth"
+        title="Vetrigaram Tech Services | AC, Refrigerator & Washing Machine Service"
         description="Vetrigaram delivers fast, certified, and warranty-backed appliance engineering, precision diagnostic troubleshooting, and rapid doorstep repair across Chennai and Ambattur. ₹149 inspection."
         canonicalPath="/"
         schemas={schemas}
@@ -95,10 +96,13 @@ export default function HomePage({ onBookClick, onBookNow: externalBookNow, sele
       <WhyChooseUs />
 
       {/* Case Studies & Measurable Breakthroughs */}
-      <CaseStudies />
+      {/* <CaseStudies /> */}
 
       {/* Customer Testimonials & Reviews */}
       <Reviews />
+
+      {/* Local Coverage & Available Location Verification */}
+      <ServiceArea />
 
       {/* Direct Booking & Dispatch Form */}
       <div id="booking">

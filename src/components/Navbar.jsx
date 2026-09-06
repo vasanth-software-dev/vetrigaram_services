@@ -17,7 +17,7 @@ export default function Navbar({ onBookClick }) {
     { label: 'Home', path: '/' },
     { label: 'Services / Solutions', path: '/services' },
     { label: 'Why Us', href: '#why-us', path: '/#why-us' },
-    { label: 'Case Studies', href: '#case-studies', path: '/#case-studies' },
+    // { label: 'Case Studies', href: '#case-studies', path: '/#case-studies' },
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' }
   ];
@@ -83,7 +83,7 @@ export default function Navbar({ onBookClick }) {
           <div className="flex justify-between items-center h-20">
             {/* Brand Logo */}
             <Link to="/" className="flex items-center group shrink-0 focus:outline-none">
-              <Logo size="md" textLight={true} />
+              <Logo size="md" textLight={true} showTamil={true} />
             </Link>
 
             {/* Desktop Navigation */}

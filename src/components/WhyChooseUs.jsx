@@ -4,7 +4,8 @@ import {
   Zap, 
   Award, 
   Clock, 
-  TrendingUp
+  TrendingUp,
+  Star
 } from 'lucide-react';
 
 export default function WhyChooseUs() {
@@ -40,48 +41,76 @@ export default function WhyChooseUs() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Large Visual Inspired by Circular Logo Geometry */}
-          <div className="lg:col-span-6 relative flex items-center justify-center">
-            
-            {/* Visual Composition Container */}
-            <div className="relative w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] rounded-3xl bg-[#071A33] border border-[#2385E8]/30 shadow-2xl p-8 flex items-center justify-center overflow-hidden group">
+         <div className="lg:col-span-6 relative flex items-center justify-center"> 
+            {/* Ambient Backlight for Logo */}
+            <div className="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] flex items-center justify-center">
               
-              {/* Radial Gradients & Glows */}
-              <div className="absolute inset-0 bg-radial from-[#1459B8]/30 via-transparent to-transparent opacity-80" />
-              <div className="absolute -bottom-16 -right-16 w-64 h-64 bg-[#FF7A00]/20 rounded-full blur-2xl" />
+              {/* Outer Orbital Ring (Slow clockwise) */}
+              <div className="absolute inset-0 rounded-full border border-dashed border-[#2385E8]/25 animate-orbital-slow pointer-events-none">
+                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#2385E8] shadow-[0_0_12px_#2385E8]" />
+                <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#1459B8]" />
+              </div>
 
-              {/* Concentric Rotating Orbital Graphics */}
-              <div className="absolute inset-8 rounded-full border border-dashed border-[#2385E8]/30 animate-orbital-slow pointer-events-none" />
-              <div className="absolute inset-16 rounded-full border border-[#2385E8]/20 animate-orbital-reverse pointer-events-none" />
-              
-              {/* Metallic Orange Forward Acceleration Arc */}
+              {/* Middle Orbital Ring (Counter-clockwise with orange velocity node) */}
+              <div className="absolute inset-5 sm:inset-7 rounded-full border border-[#2385E8]/20 animate-orbital-reverse pointer-events-none">
+                <div className="absolute top-1/2 -right-2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#FF7A00] shadow-[0_0_16px_#FF7A00]" />
+              </div>
+
+              {/* Inner Radiant Orange Momentum Arc */}
               <div 
-                className="absolute inset-12 rounded-full border-2 border-transparent border-t-[#FF7A00] border-r-[#FF9A1F] pointer-events-none"
-                style={{ transform: 'rotate(45deg)' }}
+                className="absolute inset-10 sm:inset-12 rounded-full border-2 border-transparent border-b-[#FF7A00] border-r-[#FF9A1F] pointer-events-none opacity-80"
+                style={{ transform: 'rotate(15deg)' }}
               />
 
-              {/* Central Logo Emblem with Specular Depth */}
-              <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl bg-white p-3 shadow-2xl border border-white/20 flex items-center justify-center z-20 group-hover:scale-105 transition-transform duration-500">
+              {/* Soft Center Glow */}
+              <div className="absolute inset-16 bg-radial from-[#2385E8]/20 via-[#0B2345]/50 to-transparent rounded-full blur-xl pointer-events-none" />
+
+              {/* Central 3D Emblem Container */}
+              <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-full bg-[#071A33] p-3 border border-[#2385E8]/35 shadow-[0_12px_45px_rgba(7,26,51,0.8),0_0_35px_rgba(35,133,232,0.25)] flex items-center justify-center group hover:scale-105 transition-all duration-500 z-20">
                 <img
                   src={`${import.meta.env.BASE_URL}logo-emblem.png`}
-                  alt="Vetrigaram Emblem"
-                  className="w-full h-full object-contain select-none pointer-events-none"
+                  alt="Vetrigaram Momentum Emblem"
+                  className="w-full h-full object-contain select-none pointer-events-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
                 />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none" />
               </div>
 
-              {/* Floating Glassmorphic Milestone 1 (Top Left) */}
-              <div className="absolute top-6 left-6 glass-card-dark px-3.5 py-2 rounded-xl flex items-center space-x-2 border border-white/10 shadow-lg z-30">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse" />
-                <span className="text-xs font-bold text-white tracking-tight">100% Genuine Spares</span>
+              {/* Floating Glassmorphic Metric Badge 1 (Top-Right) */}
+              <div className="absolute -top-3 right-0 sm:-right-4 glass-card-dark p-3 sm:px-4 sm:py-2.5 rounded-xl flex items-center space-x-2.5 shadow-card-dark animate-float z-30">
+                <div className="w-8 h-8 rounded-lg bg-[#FF7A00]/20 flex items-center justify-center shrink-0">
+                  <Star className="w-4 h-4 text-[#FF7A00] fill-[#FF7A00]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white tracking-tight">+98% Satisfaction</div>
+                  <div className="text-[10px] text-gray-300">5-Star Rated Service</div>
+                </div>
               </div>
 
-              {/* Floating Glassmorphic Milestone 2 (Bottom Right) */}
-              <div className="absolute bottom-6 right-6 glass-card-dark px-3.5 py-2 rounded-xl flex items-center space-x-2 border border-white/10 shadow-lg z-30">
-                <TrendingUp className="w-3.5 h-3.5 text-[#FF7A00]" />
-                <span className="text-xs font-bold text-white tracking-tight">Guaranteed Reliability</span>
+              {/* Floating Glassmorphic Metric Badge 2 (Bottom-Left) */}
+              <div 
+                className="absolute -bottom-4 left-0 sm:-left-4 glass-card-dark p-3 sm:px-4 sm:py-2.5 rounded-xl flex items-center space-x-2.5 shadow-card-dark animate-float z-30"
+                style={{ animationDelay: '1.5s' }}
+              >
+                <div className="w-8 h-8 rounded-lg bg-[#2385E8]/20 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-4 h-4 text-[#2385E8]" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white tracking-tight">Verified Engineers</div>
+                  <div className="text-[10px] text-gray-300">Certified & Background Checked</div>
+                </div>
+              </div>
+
+              {/* Floating Metric Badge 3 (Upward Growth Trajectory Indicator) */}
+              <div 
+                className="absolute top-1/2 -left-6 sm:-left-8 -translate-y-1/2 glass-card-dark px-3 py-2 rounded-xl flex items-center space-x-2 shadow-card-dark hidden sm:flex z-30"
+              >
+                <div className="w-6 h-6 rounded-md bg-[#FF7A00]/15 flex items-center justify-center">
+                  <TrendingUp className="w-3.5 h-3.5 text-[#FF7A00]" />
+                </div>
+                <span className="text-[11px] font-bold text-white">3.5x Speed</span>
               </div>
 
             </div>
-
           </div>
 
           {/* Right Column: Company Story & Forward-Moving Benefits */}
