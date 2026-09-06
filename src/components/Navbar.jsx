@@ -6,23 +6,12 @@ import { CONTACT_NUMBER } from '../utils/contacts';
 
 export default function Navbar({ onBookClick }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  
   const location = useLocation();
   const navigate = useNavigate();
 
   const isHomePage = location.pathname === '/' || location.pathname === '';
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 25) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -88,9 +77,7 @@ export default function Navbar({ onBookClick }) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? 'glass-nav-scrolled' : 'glass-nav-transparent'
-        }`}
+        className="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-nav-scrolled"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
